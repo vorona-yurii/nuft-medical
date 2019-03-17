@@ -1,0 +1,26 @@
+.login-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-page .container h1{
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 600;
+}
+.login-page .lofin-form-wrap{
+    margin-left: 33.333333333%;
+    padding: 10px 45px 25px;
+    background-color: #fff;
+    box-shadow: 0 5px 90px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+@media (max-width: 768px) {
+    .login-page .lofin-form-wrap{
+        margin-left: 0;
+    }
+}
+.login-page label{
+    margin-bottom: 5px !important;
+}

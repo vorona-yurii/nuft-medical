@@ -1,0 +1,27 @@
+Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} !^/(web)
+RewriteRule ^assets/(.*)$ /web/assets/$1 [L]
+RewriteRule ^css/(.*)$ web/css/$1 [L]
+RewriteRule ^js/(.*)$ web/js/$1 [L]
+RewriteRule ^images/(.*)$ web/images/$1 [L]
+RewriteRule ^img/(.*)$ web/img/$1 [L]
+RewriteRule ^font-awesome/(.*)$ web/font-awesome/$1 [L]
+RewriteRule ^fonts/(.*)$ web/fonts/$1 [L]
+RewriteRule ^upload/(.*)$ web/upload/$1 [L]
+RewriteRule ^uploads/(.*)$ web/uploads/$1 [L]
+RewriteRule ^sound/(.*)$ web/sound/$1 [L]
+Rewriterule ^robots.txt$ web/robots.txt [L]
+Rewriterule ^favicon.ico$ web/favicon.ico [L]
+Rewriterule ^sitemap.xml$ web/sitemap.xml [L]
+Rewriterule ^google65c9ce511858f60f.html$ web/google65c9ce511858f60f.html [L]
+RewriteRule (.*) /web/$1
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /web/index.php
+
+#RewriteCond %{HTTPS} =off
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
