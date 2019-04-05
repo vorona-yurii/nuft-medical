@@ -35,8 +35,8 @@ class m181024_102003_create_table_user extends Migration
                 [
                     [
                         'Main Admin',
-                        'admin@admin.net',
-                        '$2y$13$4SyZmXuPbZK5vlHyv8ff6ez74q40ZK1a.kuWgc8dYP/h0SFTfKgQ.', //xickGX
+                        'admin@nuft.net',
+                        '$2y$10$vqTOfj8bsUGp3UKbhcl68uTsFTPP2vud39s8FjyrYh/b4cSbT2bpS', // %9Fg2U(!
                         time()
                     ],
                 ]

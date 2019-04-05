@@ -8,7 +8,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Вход в систему';
+$this->title = 'Вхід в систему';
 ?>
 <div class="login-page">
     <div class="container">
@@ -31,11 +31,11 @@ $this->title = 'Вход в систему';
             <?= $form->field( $model, 'rememberMe' )->checkbox( [
                 'template' => "{input} {label}{error}\n",
             ] )->label(
-                'Запомнить меня'
+                'Запам\'ятати меня'
             ) ?>
 
             <div class="form-group">
-                <?= Html::submitButton( 'Войти', [ 'class' => 'btn btn-primary col-md-12', 'name' => 'login-button' ] ) ?>
+                <?= Html::submitButton( 'Ввійти', [ 'class' => 'btn btn-primary col-md-12', 'name' => 'login-button' ] ) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

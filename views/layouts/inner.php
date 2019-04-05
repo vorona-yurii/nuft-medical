@@ -45,9 +45,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                 'items'        => [
                     '<li class="nav-header">
                         <div class="dropdown profile-element text-center"> 
-                            <a href="' . Url::toRoute('/') . '">
-                                Nuft Medical
-                             </a>
+                             <img alt="image" class="img-circle" src="' . Url::to( '@web/images/nuft-logo.png' ) . '">
+                             <span class="block m-t-xs">
+                                <strong>NUFT medical</strong>
+                             </span>
                         </div>
                         <div class="logo-element">NM</div>
                     </li>',
@@ -77,7 +78,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                         <ul class="dropdown-menu dropdown-messages">
                             <li>
                                 <?= Html::beginForm( [ '/logout' ], 'post' )
-                                . Html::submitButton( '<i class="fa fa-sign-out"></i> Выход',
+                                . Html::submitButton( '<i class="fa fa-sign-out"></i> Вихід',
                                     [ 'class' => 'btn btn-link logout' ] ) . Html::endForm() ?>
                             </li>
                         </ul>
