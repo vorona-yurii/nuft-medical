@@ -35,4 +35,31 @@ class Employee extends ActiveRecord
         return '{{%employee}}';
     }
 
+    /**
+     * @return array
+     */
+    public static function getGenderArray()
+    {
+        return [
+            null => 'Не вказано',
+            0    => 'Чоловіча',
+            1    => 'Жіноча'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getAllEmployees()
+    {
+        $return[ null ] = 'Не вказано';
+
+        $employees = self::find()->all();
+        foreach ($employees as $employee) {
+            $return[$employee->employee_id] = $employee->full_name;
+        }
+
+        return $return;
+    }
+
 }

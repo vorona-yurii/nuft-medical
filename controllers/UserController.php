@@ -38,7 +38,8 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        //return $this->render('index');
+        return $this->redirect(['/employee']);
     }
 
     /**
@@ -50,7 +51,7 @@ class UserController extends Controller
 
         $model = new LoginForm();
         if ( $model->load( Yii::$app->request->post() ) && $model->login() ) {
-            return $this->redirect(['user/index']);
+            return $this->redirect(['/user']);
         }
 
         return $this->render( 'login', compact('model') );

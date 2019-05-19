@@ -63,9 +63,38 @@ $config = [
             'showScriptName'  => false,
             'enablePrettyUrl' => true,
             'rules'           => [
-                'login'                 => 'user/login',
-                'logout'                => 'user/logout',
-                '<controller>/<action>' => '<controller>/<action>',
+                'login'                   => 'user/login',
+                'logout'                  => 'user/logout',
+
+                 /***************** employee ******************/
+                'employee'                => 'employee/list',
+                'employee/list'           => 'employee/list',
+                'employee/delete'         => 'employee/delete',
+                'employee/<action>/<id>'  => 'employee/change',
+                'employee/<action>'       => 'employee/change',
+
+                /***************** department ******************/
+                'department'                => 'department/list',
+                'department/list'           => 'department/list',
+                'department/delete'         => 'department/delete',
+                'department/<action>/<id>'  => 'department/change',
+                'department/<action>'       => 'department/change',
+
+                /*************** doctor *****************/
+                'doctor'                => 'doctor/list',
+                'doctor/list'           => 'doctor/list',
+                'doctor/delete'         => 'doctor/delete',
+                'doctor/<action>/<id>'  => 'doctor/change',
+                'doctor/<action>'       => 'doctor/change',
+
+                /***************** analysis ******************/
+                'analysis'                => 'analysis/list',
+                'analysis/list'           => 'analysis/list',
+                'analysis/delete'         => 'analysis/delete',
+                'analysis/<action>/<id>'  => 'analysis/change',
+                'analysis/<action>'       => 'analysis/change',
+
+                '<controller>/<action>'   => '<controller>/<action>',
             ],
     ],
 

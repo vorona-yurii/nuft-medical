@@ -52,6 +52,41 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                         </div>
                         <div class="logo-element">NM</div>
                     </li>',
+                    '<li>
+                        <a>
+                            <i class="fa fa-sitemap"></i>
+                            <span class="nav-label">Організація</span> 
+                            <span class="caret"></span>
+                        </a>' .
+                    Nav::widget( [
+                        'items'   => [
+                            [ 'label' => 'Працівники', 'url' => [ "employee/list" ] ],
+                            [ 'label' => 'Структурні підрозділи', 'url' => [ "department/list" ] ],
+                            [ 'label' => 'Загальні професії', 'url' => [ "page/edit/" . $blog_parent->url ] ],
+                            [ 'label' => 'Посади підрозділів', 'url' => [ "page/edit/" . $blog_parent->url ] ],
+                        ],
+                        'options' => [ 'class' => 'nav nav-second-level collapse' ],
+                    ] )
+                    . '</li>',
+                    '<li>
+                        <a>
+                            <i class="fa fa-tags"></i>
+                            <span class="nav-label">Додаткові дані</span> 
+                            <span class="caret"></span>
+                        </a>' .
+                    Nav::widget( [
+                        'items'   => [
+                            [ 'label' => 'Шкідливі фактори', 'url' => [ "employee/list" ] ],
+                            [ 'label' => 'Лікарі', 'url' => [ "doctor/list" ] ],
+                            [ 'label' => 'Аналізи', 'url' => [ "analysis/list" ] ],
+                        ],
+                        'options' => [ 'class' => 'nav nav-second-level collapse' ],
+                    ] )
+                    . '</li>',
+                    [
+                        'label' => '<i class="fa fa-file-text-o"></i> <span class="nav-label">Звіти</span>',
+                        'url'   => [ 'user/tree-ref' ],
+                    ],
                 ],
 
                 'options' => [ 'class' => 'nav', 'id' => 'side-menu' ],
