@@ -27,7 +27,8 @@
         "2amigos/yii2-multi-select-widget": "*",
         "imal-h/pdf-box": "^1.2",
         "kartik-v/yii2-widget-datetimepicker": "*",
-        "kartik-v/yii2-widget-select2": "@dev"
+        "kartik-v/yii2-widget-select2": "@dev",
+        "phpoffice/phpword": "^0.16.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
