@@ -21,4 +21,19 @@ class FactorAnalysis extends ActiveRecord
         return '{{%factor_analysis}}';
     }
 
+    /**
+     * @param $factor_id
+     * @return array
+     */
+    public static function getFactorAnalysis($factor_id)
+    {
+        $return = [];
+        $factorAnalysis = self::findAll(['factor_id' => $factor_id]);
+        foreach ($factorAnalysis as $factorAnalysis_item) {
+            $return[] = $factorAnalysis_item->analysis_id;
+        }
+
+        return $return;
+    }
+
 }

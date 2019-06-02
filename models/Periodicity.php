@@ -30,4 +30,19 @@ class Periodicity extends ActiveRecord
     {
         return '{{%periodicity}}';
     }
+
+    /**
+     * @return array
+     */
+    public static function getAllPeriodicity()
+    {
+        $return[ null ] = 'Не вказано';
+
+        $periodicity = self::find()->all();
+        foreach ($periodicity as $periodicity_item) {
+            $return[$periodicity_item->periodicity_id] = $periodicity_item->name;
+        }
+
+        return $return;
+    }
 }

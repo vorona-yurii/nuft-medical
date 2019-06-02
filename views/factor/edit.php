@@ -6,7 +6,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = ($id ? 'Редагування' : 'Додавання' ). ' посади';
+$this->title = ($id ? 'Редагування' : 'Додавання' ). ' шкідливого фактору';
 
 ?>
 
@@ -42,46 +42,10 @@ $this->title = ($id ? 'Редагування' : 'Додавання' ). ' по�
                         </div>
                         <div class="ibox-content">
                             <div class="row">
-                                <?= $form->field( $model, 'name', ['options' => ['class' => 'col-xs-12 col-lg-4']])
+                                <?= $form->field( $model, 'name', ['options' => ['class' => 'col-xs-12 col-lg-6']])
                                     ->label( 'Назва' )->textInput(); ?>
-                                <div class="col-xs-12 col-lg-4 field-positionform-department_id">
-                                    <label class="control-label" for="positionform-department_id">Підрозділ</label>
-                                    <?php echo \kartik\select2\Select2::widget([
-                                        'id'      => "positionform-department_id",
-                                        'name'    => 'PositionForm[department_id]',
-                                        'value'   => $model->department_id,
-                                        'data'    => \app\models\Department::getAllDepartments(),
-                                        'options' => [
-                                            'placeholder' => 'Виберіть підрозділ',
-                                            'multiple' => false
-                                        ],
-                                        'pluginOptions' => [
-                                            'tags' => false,
-                                            'maximumInputLength' => 10
-                                        ],
-                                    ]); ?>
-                                </div>
-                                <div class="col-xs-12 col-lg-4 field-positionform-profession_id">
-                                    <label class="control-label" for="positionform-profession_id">Професія</label>
-                                    <?php echo \kartik\select2\Select2::widget([
-                                        'id'      => "positionform-profession_id",
-                                        'name'    => 'PositionForm[profession_id]',
-                                        'value'   => $model->profession_id,
-                                        'data'    => \app\models\Profession::getAllProfessions(),
-                                        'options' => [
-                                            'placeholder' => 'Виберіть професію',
-                                            'multiple' => false
-                                        ],
-                                        'pluginOptions' => [
-                                            'tags' => false,
-                                            'maximumInputLength' => 10
-                                        ],
-                                    ]); ?>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <?= $form->field( $model, 'additional_info', ['options' => ['class' => 'col-xs-12 col-lg-12']])
-                                    ->label( 'Додаткова інформація' )->textarea(['rows' => 5]); ?>
+                                <?= $form->field( $model, 'code', ['options' => ['class' => 'col-xs-12 col-lg-6']])
+                                    ->label( 'Код' )->textInput(); ?>
                             </div>
                         </div>
                     </div>
@@ -95,15 +59,47 @@ $this->title = ($id ? 'Редагування' : 'Додавання' ). ' по�
                         </div>
                         <div class="ibox-content">
                             <div class="row">
-                                <div class="col-xs-12 col-lg-12 field-positionform-factors">
-                                    <label class="control-label">Шкідливі фактори</label>
+                                <div class="col-xs-12 col-lg-4 field-factorform-analysis">
+                                    <label class="control-label">Аналізи</label>
                                     <?php echo \kartik\select2\Select2::widget([
-                                        'name'    => 'PositionForm[factors]',
-                                        'value'   => \app\models\PositionFactor::getPositionFactors($model->position_id),
-                                        'data'    => \app\models\Factor::getAllFactors(),
+                                        'name'    => 'FactorForm[analysis]',
+                                        'value'   => \app\models\FactorAnalysis::getFactorAnalysis($model->factor_id),
+                                        'data'    => \app\models\Analysis::getAllAnalysis(),
                                         'options' => [
-                                            'placeholder' => 'Виберіть фактори',
+                                            'placeholder' => 'Виберіть аналізи',
                                             'multiple' => true
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
+                                <div class="col-xs-12 col-lg-4 field-factorform-doctor">
+                                    <label class="control-label">Лікарі</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'name'    => 'FactorForm[doctor]',
+                                        'value'   => \app\models\FactorDoctor::getFactorDoctor($model->factor_id),
+                                        'data'    => \app\models\Doctor::getAllDoctors(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть лікарів',
+                                            'multiple' => true
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
+                                <div class="col-xs-12 col-lg-4 field-factorform-periodicity">
+                                    <label class="control-label">Період</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'name'    => 'FactorForm[periodicity]',
+                                        'value'   => \app\models\FactorPeriodicity::getFactorPeriodicity($model->factor_id),
+                                        'data'    => \app\models\Periodicity::getAllPeriodicity(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть період',
+                                            'multiple' => false
                                         ],
                                         'pluginOptions' => [
                                             'tags' => false,

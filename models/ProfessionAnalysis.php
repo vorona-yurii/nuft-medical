@@ -21,4 +21,19 @@ class ProfessionAnalysis extends ActiveRecord
         return '{{%profession_analysis}}';
     }
 
+    /**
+     * @param $profession_id
+     * @return array
+     */
+    public static function getProfessionAnalysis($profession_id)
+    {
+        $return = [];
+        $professionAnalysis = self::findAll(['profession_id' => $profession_id]);
+        foreach ($professionAnalysis as $professionAnalysis_item) {
+            $return[] = $professionAnalysis_item->analysis_id;
+        }
+
+        return $return;
+    }
+
 }

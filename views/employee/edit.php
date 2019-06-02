@@ -66,8 +66,23 @@ $this->title = ($id ? 'Редагування' : 'Додавання' ). ' пр�
                                     ->label( 'Місце проживання ' )->textInput(); ?>
                                 <?= $form->field( $model, 'gender', ['options' => ['class' => 'col-xs-12 col-lg-2']])
                                     ->label( 'Стать ' )->dropDownList( Employee::getGenderArray(),  [ 'options' => [ $model->gender => [ 'selected' => true ] ] ] ); ?>
-                                <?= $form->field( $model, 'position_id', ['options' => ['class' => 'col-xs-12 col-lg-2']])
-                                    ->label( 'Посада ' )->textInput(); ?>
+                                <div class="col-xs-12 col-lg-2 field-positionform-position_id">
+                                    <label class="control-label" for="positionform-position_id">Підрозділ</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'id'      => "employeeform-position_id",
+                                        'name'    => 'EmployeeForm[position_id]',
+                                        'value'   => $model->position_id,
+                                        'data'    => \app\models\Position::getAllPositions(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть посаду',
+                                            'multiple' => false
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
                                 <?= $form->field( $model, 'work_experience', ['options' => ['class' => 'col-xs-12 col-lg-2']])
                                     ->label( 'Стаж роботи ' )->textInput(); ?>
                             </div>

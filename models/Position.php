@@ -23,6 +23,21 @@ class Position extends ActiveRecord
         return '{{%position}}';
     }
 
+    /*
+    * @return array
+    */
+    public static function getAllPositions()
+    {
+        $return[ null ] = 'Не вказано';
+
+        $positions = self::find()->all();
+        foreach ($positions as $position) {
+            $return[$position->position_id] = $position->name;
+        }
+
+        return $return;
+    }
+
     public function getDepartment()
     {
         return Department::findOne($this->department_id);

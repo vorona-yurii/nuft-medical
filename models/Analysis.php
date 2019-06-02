@@ -20,4 +20,19 @@ class Analysis extends ActiveRecord
         return '{{%analysis}}';
     }
 
+    /**
+     * @return array
+     */
+    public static function getAllAnalysis()
+    {
+        $return[ null ] = 'Не вказано';
+
+        $analysis = self::find()->all();
+        foreach ($analysis as $analysis_item) {
+            $return[$analysis_item->analysis_id] = $analysis_item->name;
+        }
+
+        return $return;
+    }
+
 }

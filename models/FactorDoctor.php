@@ -21,4 +21,19 @@ class FactorDoctor extends ActiveRecord
         return '{{%factor_doctor}}';
     }
 
+    /**
+     * @param $factor_id
+     * @return array
+     */
+    public static function getFactorDoctor($factor_id)
+    {
+        $return = [];
+        $factorDoctors = self::findAll(['factor_id' => $factor_id]);
+        foreach ($factorDoctors as $factorDoctor) {
+            $return[] = $factorDoctor->doctor_id;
+        }
+
+        return $return;
+    }
+
 }

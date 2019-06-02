@@ -94,6 +94,13 @@ $config = [
                 'position/<action>/<id>'  => 'position/change',
                 'position/<action>'       => 'position/change',
 
+                /*************** factor *****************/
+                'factor'                => 'factor/list',
+                'factor/list'           => 'factor/list',
+                'factor/delete'         => 'factor/delete',
+                'factor/<action>/<id>'  => 'factor/change',
+                'factor/<action>'       => 'factor/change',
+
                 /*************** doctor *****************/
                 'doctor'                => 'doctor/list',
                 'doctor/list'           => 'doctor/list',
@@ -107,6 +114,13 @@ $config = [
                 'analysis/delete'         => 'analysis/delete',
                 'analysis/<action>/<id>'  => 'analysis/change',
                 'analysis/<action>'       => 'analysis/change',
+
+                /*************** periodicity *****************/
+                'periodicity'                => 'periodicity/list',
+                'periodicity/list'           => 'periodicity/list',
+                'periodicity/delete'         => 'periodicity/delete',
+                'periodicity/<action>/<id>'  => 'periodicity/change',
+                'periodicity/<action>'       => 'periodicity/change',
 
                  /***************** report ******************/
                 'report/employee-medical-card/download'     => 'report/employee-medical-card-download',
