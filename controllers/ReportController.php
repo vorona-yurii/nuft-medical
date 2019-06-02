@@ -96,28 +96,35 @@ class ReportController extends Controller
         ];
     }
 
-    // /**
-    //  * @return array
-    //  */
-    // public function behaviors()
-    // {
-    //     return [
-    //         'access' => [
-    //             'class' => AccessControl::className(),
-    //             'rules' => [
-    //                 [
-    //                     'actions'      => [ 'employee' ],
-    //                     'allow'        => true,
-    //                     'roles'        => [ '@' ],
-    //                     'denyCallback' => function ( $rule, $action ) {
-    //                         return $action->controller->redirect( [ 'user/login' ] );
-    //                     },
-    //                 ],
-    //             ],
+    /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions'      => [
+                            'employee',
+                            'employee-medical-card-download',
+                            'employee-medical-referral-download',
+                            'medical-examination-schedule-download',
+                            'medical-examination-workers-list-download',
+                            'workers-categories-act-download',
+                        ],
+                        'allow'        => true,
+                        'roles'        => [ '@' ],
+                        'denyCallback' => function ( $rule, $action ) {
+                            return $action->controller->redirect( [ 'user/login' ] );
+                        },
+                    ],
+                ],
 
-    //         ],
-    //     ];
-    // }
+            ],
+        ];
+    }
 
     /**
      * @return string
