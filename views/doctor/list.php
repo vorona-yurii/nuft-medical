@@ -63,7 +63,6 @@ $(\'body\').on(\'click\',\'a.del-doctor\',function(e){
                         'layout'       => '{items}',
                         'columns'      =>
                             [
-                                'doctor_id:integer:ID',
                                 'name:text:Назва лікаря',
                                 [
                                     'label'  => 'Дії',

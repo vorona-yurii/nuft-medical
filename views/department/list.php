@@ -63,7 +63,6 @@ $(\'body\').on(\'click\',\'a.del-department\',function(e){
                         'layout'       => '{items}',
                         'columns'      =>
                             [
-                                'department_id:integer:ID',
                                 'name:text:Назва',
                                 [
                                     'label' => 'Керівник підрозділу',

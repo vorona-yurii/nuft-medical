@@ -63,7 +63,6 @@ $(\'body\').on(\'click\',\'a.del-position\',function(e){
                         'layout'       => '{items}',
                         'columns'      =>
                             [
-                                'position_id:integer:ID',
                                 'name:text:Назва',
                                 [
                                     'label'     => 'Підрозділ',
