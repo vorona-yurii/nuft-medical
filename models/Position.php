@@ -23,4 +23,13 @@ class Position extends ActiveRecord
         return '{{%position}}';
     }
 
+    public function getDepartment()
+    {
+        return Department::findOne($this->department_id);
+    }
+
+    public function getProfession()
+    {
+        return Profession::findOne($this->profession_id);
+    }
 }

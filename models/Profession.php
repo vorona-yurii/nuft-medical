@@ -21,4 +21,8 @@ class Profession extends ActiveRecord
         return '{{%profession}}';
     }
 
+    public function getCombinedName()
+    {
+        return $this->name.' ('.$this->code.')';
+    }
 }

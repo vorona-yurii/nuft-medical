@@ -20,6 +20,9 @@ class ReportController extends Controller
     private $document = null;
     private $documentValues = [];
     private $documentTableRows = [];
+    private $documentBlocks = [];
+
+    private $attachmentName = 'Report.docx';
 
     protected function setTemplate($template)
     {
@@ -34,6 +37,16 @@ class ReportController extends Controller
     protected function setDocumentTableRows($rows)
     {
         $this->documentTableRows = $rows;
+    }
+
+    protected function setDocumentBlocks($blocks)
+    {
+        $this->documentBlocks = $blocks;
+    }
+
+    protected function setAttachmentName($attachmentName, $attachmentExtension = 'docx')
+    {
+        $this->attachmentName = $attachmentName.'.'.$attachmentExtension;
     }
 
     private function createAndReturnDocument()
@@ -53,30 +66,53 @@ class ReportController extends Controller
 
     private function fillDocument()
     {
+        // values
         foreach ($this->documentValues as $key => $value) {
             $this->document->setValue($key, $value);
         }
 
+        // tables
         if (!empty($this->documentTableRows)) {
             $rows = $this->documentTableRows;
             $firstColumnName = array_keys($rows[0])[0];
             $this->document->cloneRow($firstColumnName, count($rows));
-            foreach ($rows as $rowId => $row) {
-                foreach ($row as $key => $value) {
+            foreach ($rows as $rowId => $rowValues) {
+                foreach ($rowValues as $key => $value) {
                     $this->document->setValue($key.'#'.($rowId + 1), $value);
                 }
             }
         }
+
+        // blocks
+        foreach ($this->documentBlocks as $blockName => $blockRows) {
+            if (count($blockRows)) {
+                $this->document->cloneBlock($blockName, count($blockRows), true, true);
+                foreach ($blockRows as $rowId => $rowValues) {
+                    foreach ($rowValues as $key => $value) {
+                        $this->document->setValue($key.'#'.($rowId + 1), $value);
+                    }
+                }
+            } else {
+                $this->document->deleteBlock($blockName);
+            }
+        }
     }
 
-    private function returnDocumentForDownload($attachmentName = 'Report.docx')
+    private function reportCreationError()
     {
+        echo 'An error occurred while creating the file';
+    }
+
+    private function returnDocumentForDownload()
+    {
+        error_log($this->attachmentName);
+
         $attachment = $this->document->save();
         if (file_exists($attachment)) {
-            Yii::$app->response->sendFile($attachment, $attachmentName);
+            Yii::$app->response->sendFile($attachment, $this->attachmentName);
             unlink($attachment);
         } else {
-            echo 'An error occurred while creating the file';
+            $this->reportCreationError();
         }
     }
 
@@ -147,41 +183,57 @@ class ReportController extends Controller
 
     public function actionEmployeeMedicalCardDownload($employeeId)
     {
-        $this->setTemplate('employee-medical-card.docx');
-
         $employee = Employee::findOne($employeeId);
-        if( $employee ) {
-            $this->setDocumentValues([
-                'employeeFullName'       => $employee->full_name,
-                'employeeGender'         => $employee->gender,
-                'employeeBirthYear'      => $employee->birth_date,
-                'employeeResidence'      => $employee->residence,
-                'employeeCompany'        => 'Національний Університет Харчових Технологій',
-                'employeeDepartment'     => Department::findOne($employee->department_id) ? Department::findOne($employee->department_id)->name : '',
-                'employeeProfession'     => $employee->position_id,
-                'employeeFactors'        => '',
-                // 'employeeFirstName'      => 'Артем',
-                // 'employeeMiddleName'     => 'Юрійович',
-                // 'employeeBirthYear'      => '1998',
-                // 'employeeProfessionCode' => '00123',
-                // 'employeeProfessionName' => 'програмист',
-                // 'employeeFactors'        => 'кислота, луги',
-            ]);
-
-            $this->createAndReturnDocument();
+        if (!$employee) {
+            return $this->reportCreationError();
         }
+
+        list($position, $department, $profession) = $employee->getDependentData();
+
+        $this->setTemplate('employee-medical-card.docx');
+        $this->setAttachmentName('КарткаПрацівника_'.$employee->getNameInitials());
+
+        $this->setDocumentValues([
+            'employeeFullName'   => $employee->full_name,
+            'employeeGender'     => $employee->getGender(),
+            'employeeBirthYear'  => $employee->getBirthDate('Y'),
+            'employeeResidence'  => $employee->residence,
+            'employeeCompany'    => 'Національний Університет Харчових Технологій',
+            'employeeDepartment' => $department->name,
+            'employeeProfession' => $profession->getCombinedName(),
+            'factors'            => '',
+            'doctors'            => '',
+            'analyzes'           => '',
+            'employeeWeight'     => $employee->getHumanWeight(),
+            'employeeHeight'     => $employee->getHumanHeight(),
+            'employeeAT'         => $employee->arterial_pressure,
+        ]);
+
+        $this->setDocumentBlocks([
+            'doctorBlock' => [
+                ['doctorNumber' => 1, 'doctorName' => 'Хирург'],
+                ['doctorNumber' => 2, 'doctorName' => 'Невропатолог'],
+            ],
+        ]);
+
+        $this->createAndReturnDocument();
     }
 
     public function actionEmployeeMedicalReferralDownload($employeeId)
     {
+        $employee = Employee::findOne($employeeId);
+        if (!$employee) {
+            return $this->reportCreationError();
+        }
+
         $this->setTemplate('employee-medical-referral.docx');
 
         $this->setDocumentValues([
             'currentYear'            => date('Y'),
-            'employeeSecondName'     => 'Труш',
-            'employeeFirstName'      => 'Артем',
-            'employeeMiddleName'     => 'Юрійович',
-            'employeeBirthYear'      => '1998',
+            'employeeSecondName'     => $employee->getNamePart('second'),
+            'employeeFirstName'      => $employee->getNamePart('first'),
+            'employeeMiddleName'     => $employee->getNamePart('middle'),
+            'employeeBirthYear'      => $employee->getBirthDate('Y'),
             'employeeProfessionCode' => '00123',
             'employeeProfessionName' => 'програмист',
             'employeeFactors'        => 'кислота, луги',

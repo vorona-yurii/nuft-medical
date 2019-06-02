@@ -47,6 +47,66 @@ class Employee extends ActiveRecord
         ];
     }
 
+    public function getGender()
+    {
+        return self::getGenderArray()[ $this->gender ?? null ];
+    }
+
+    public function getNamePart($type = 'first')
+    {
+        $partsMap = [
+            'second' => 0,
+            'first'  => 1,
+            'middle' => 2,
+        ];
+
+        $nameParts = array_filter(explode(' ', $this->full_name ?? ''));
+
+        return $nameParts[ $partsMap[ $type ] ];
+    }
+
+    public function getNameInitials()
+    {
+        return (
+            $this->getNamePart('second').
+            mb_substr($this->getNamePart('first'), 0, 1).
+            mb_substr($this->getNamePart('middle'), 0, 1)
+        );
+    }
+
+    public function getBirthDate($format = 'Y-m-d')
+    {
+        return $this->birth_date ? date($format, strtotime($this->birth_date)) : '';
+    }
+
+    public function getHumanWeight()
+    {
+        return $this->weight.'кг';
+    }
+
+    public function getHumanHeight()
+    {
+        return $this->height.'см';
+    }
+
+    public function getPosition()
+    {
+        return Position::findOne($this->position_id);
+    }
+
+    public function getDependentData()
+    {
+        $position = $department = $profession = null;
+
+        $position = $this->getPosition();
+        if ($position) {
+            $department = $position->getDepartment();
+            $profession = $position->getProfession();
+        }
+
+        return [$position, $department, $profession];
+    }
+
     /**
      * @return array
      */
