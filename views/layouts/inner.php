@@ -39,7 +39,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <?php
-
+            $class_organization = in_array($this->context->route, ['employee/list', 'department/list', 'profession/list', 'profession-work/list' ]) ? 'active' : '';
+            $class_other        = in_array($this->context->route, ['doctor/list', 'analysis/list']) ? 'active' : '';
+            $class_report       = in_array($this->context->route, ['report/employee']) ? 'active' : '';
             echo Nav::widget( [
                 'encodeLabels' => false,
                 'items'        => [
@@ -52,7 +54,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                         </div>
                         <div class="logo-element">NM</div>
                     </li>',
-                    '<li>
+                    '<li class="' . $class_organization . '">
                         <a>
                             <i class="fa fa-sitemap"></i>
                             <span class="nav-label">Організація</span> 
@@ -68,7 +70,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                         'options' => [ 'class' => 'nav nav-second-level collapse' ],
                     ] )
                     . '</li>',
-                    '<li>
+                    '<li class="' . $class_other . '">
                         <a>
                             <i class="fa fa-tags"></i>
                             <span class="nav-label">Додаткові дані</span> 
@@ -83,7 +85,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                         'options' => [ 'class' => 'nav nav-second-level collapse' ],
                     ] )
                     . '</li>',
-                    '<li>
+                    '<li class="' . $class_report . '">
                         <a>
                             <i class="fa fa-file-text-o"></i>
                             <span class="nav-label">Звіти</span> 

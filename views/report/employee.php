@@ -41,7 +41,7 @@ $this->title = 'Звіти - Працівники';
                                                 [ 'class' => 'btn btn-primary btn-edit-employee' ] );
 
                                         $buttons .= '<div class="btn-group">' . Html::a( 'Звіт 2',
-                                                Url::toRoute( [ "report/2", 'id' => $searchModel->employee_id ] ),
+                                                Url::toRoute( [ "report/employee-medical-referral/download", 'id' => $searchModel->employee_id ] ),
                                                 [ 'class' => 'btn btn-primary btn-edit-employee' ] );
 
                                         return $buttons;
