@@ -94,6 +94,13 @@ $config = [
                 'position/<action>/<id>'  => 'position/change',
                 'position/<action>'       => 'position/change',
 
+                /*************** factor *****************/
+                'factor'                => 'factor/list',
+                'factor/list'           => 'factor/list',
+                'factor/delete'         => 'factor/delete',
+                'factor/<action>/<id>'  => 'factor/change',
+                'factor/<action>'       => 'factor/change',
+
                 /*************** doctor *****************/
                 'doctor'                => 'doctor/list',
                 'doctor/list'           => 'doctor/list',

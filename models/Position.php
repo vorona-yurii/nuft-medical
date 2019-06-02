@@ -32,4 +32,19 @@ class Position extends ActiveRecord
     {
         return Profession::findOne($this->profession_id);
     }
+
+    /*
+    * @return array
+    */
+    public static function getAllPositions()
+    {
+        $return[ null ] = 'Не вказано';
+
+        $positions = self::find()->all();
+        foreach ($positions as $position) {
+            $return[$position->position_id] = $position->name;
+        }
+
+        return $return;
+    }
 }
