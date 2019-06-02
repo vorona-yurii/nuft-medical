@@ -36,13 +36,31 @@ $this->title = 'Звіти - Працівники';
                                     'value'  => function ( $searchModel) {
                                         $buttons = '';
 
-                                        $buttons .= '<div class="btn-group">' . Html::a( 'Звіт 1',
-                                                Url::toRoute( [ "report/employee-medical-card/download", 'id' => $searchModel->employee_id ] ),
-                                                [ 'class' => 'btn btn-primary btn-edit-employee' ] );
+                                        $buttons .= '<div class="btn-group">' . Html::a(
+                                            'Картка',
+                                            Url::toRoute([
+                                                "report/employee-medical-card/download",
+                                                'employeeId' => $searchModel->employee_id
+                                            ]),
+                                            [
+                                                'class' => 'btn btn-primary btn-edit-employee',
+                                                'target'=>'_blank',
+                                                'data-pjax' => '0'
+                                            ]
+                                        );
 
-                                        $buttons .= '<div class="btn-group">' . Html::a( 'Звіт 2',
-                                                Url::toRoute( [ "report/2", 'id' => $searchModel->employee_id ] ),
-                                                [ 'class' => 'btn btn-primary btn-edit-employee' ] );
+                                        $buttons .= '<div class="btn-group">' . Html::a(
+                                            'Направлення',
+                                            Url::toRoute([
+                                                "report/employee-medical-referral/download",
+                                                'employeeId' => $searchModel->employee_id
+                                            ]),
+                                            [
+                                                'class' => 'btn btn-primary btn-edit-employee',
+                                                'target'=>'_blank',
+                                                'data-pjax' => '0'
+                                            ]
+                                        );
 
                                         return $buttons;
                                     },
