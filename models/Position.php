@@ -56,6 +56,16 @@ class Position extends ActiveRecord
             ->all();
     }
 
+    public function getIndexedFactors()
+    {
+        $indexedFactors = [];
+        foreach ($this->getFactors() as $factor) {
+            $indexedFactors[ $factor->factor_id ] = $factor;
+        }
+
+        return $indexedFactors;
+    }
+
     private function objects_column($objects, $column)
     {
         if (empty($objects)) {
@@ -153,11 +163,7 @@ class Position extends ActiveRecord
 
     public function getCombinedPeriodicities()
     {
-        $factors = $this->getFactors();
-        $indexedFactors = [];
-        foreach ($factors as $factor) {
-            $indexedFactors[ $factor->factor_id ] = $factor;
-        }
+        $indexedFactors = $this->getIndexedFactors();
 
         $factorsPeriodicitiesMap = FactorPeriodicity::find()
             ->where(['factor_id' => array_keys($indexedFactors)])

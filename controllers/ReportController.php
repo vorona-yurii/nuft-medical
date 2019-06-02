@@ -98,6 +98,11 @@ class ReportController extends Controller
         }
     }
 
+    private function getTemplateLineBreak()
+    {
+        return "</w:t><w:br/><w:t>";
+    }
+
     private function reportCreationError()
     {
         echo 'An error occurred while creating the file';
@@ -195,7 +200,7 @@ class ReportController extends Controller
         $this->setDocumentValues([
             'employeeFullName'   => $employee->full_name,
             'employeeGender'     => $employee->getGender(),
-            'employeeBirthYear'  => $employee->getBirthDate('Y'),
+            'employeeBirthYear'  => $employee->getFormattedDate('birth_date', 'Y'),
             'employeeResidence'  => $employee->residence,
             'employeeCompany'    => 'Національний Університет Харчових Технологій',
             'employeeDepartment' => $department->name,
@@ -242,7 +247,7 @@ class ReportController extends Controller
             'employeeSecondName'     => $employee->getNamePart('second'),
             'employeeFirstName'      => $employee->getNamePart('first'),
             'employeeMiddleName'     => $employee->getNamePart('middle'),
-            'employeeBirthYear'      => $employee->getBirthDate('Y'),
+            'employeeBirthYear'      => $employee->getFormattedDate('birth_date', 'Y'),
             'employeeProfessionCode' => $profession->code,
             'employeeProfessionName' => $profession->name,
             'employeeFactors'        => implode(', ', $position->getFactorsCombinedNames()),
@@ -271,36 +276,125 @@ class ReportController extends Controller
 
     public function actionMedicalExaminationWorkersListDownload()
     {
+        // @TODO
+        $employees = [];
+        for ($i=0; $i < 1; $i++) {
+            $employees[] = Employee::findOne(1);
+        }
+
+        $employeesRows = [];
+        foreach ($employees as $key => $employee) {
+            list($position, $department, $profession) = $employee->getDependentData();
+
+            $employeesRows[] = [
+                'employeeNumber'                     => $key + 1,
+                'employeeFullName'                   => $employee->full_name,
+                'employeeGender'                     => $employee->getGender(),
+                'employeeBirthDate'                  => $employee->getFormattedDate('birth_date'),
+                'employeeDepartment'                 => $department->name,
+                'employeeProfessionCode'             => $profession->code,
+                'employeeProfessionName'             => $profession->name,
+                'factors'                            => implode(', ', $position->getFactorsCombinedNames()),
+                'doctors'                            => implode(', ', $position->getDoctorsNames()),
+                'analyzes'                           => implode(', ', $position->getAnalyzesNames()),
+                'employeeWorkExperience'             => $employee->work_experience,
+                'employeeLastMedicalExaminationDate' => $employee->getFormattedDate('last_medical_examination_date'),
+            ];
+        }
+
         $this->setTemplate('medical-examination-workers-list.docx');
+        $this->setAttachmentName('СписокПрацівників_');
 
         $this->setDocumentValues([
-            'currentYear'            => date('Y'),
-            'employeeSecondName'     => 'Труш',
-            'employeeFirstName'      => 'Артем',
-            'employeeMiddleName'     => 'Юрійович',
-            'employeeBirthYear'      => '1998',
-            'employeeProfessionCode' => '00123',
-            'employeeProfessionName' => 'програмист',
-            'employeeFactors'        => 'кислота, луги',
+            'currentYear' => date('Y'),
         ]);
+
+        $this->setDocumentTableRows($employeesRows);
 
         $this->createAndReturnDocument();
     }
 
     public function actionWorkersCategoriesActDownload()
     {
+        // @TODO
+        $employees = [];
+        for ($i=0; $i < 100; $i++) {
+            $employees[] = Employee::findOne(1);
+        }
+        for ($i=0; $i < 50; $i++) {
+            $employees[] = Employee::findOne(2);
+        }
+
+        $departments = [];
+        $employeesTotalCount = 0;
+        $womanEmployeesTotalCount = 0;
+        foreach ($employees as $employee) {
+            list($position, $department, $profession) = $employee->getDependentData();
+            $departmentId = $department->department_id;
+            $professionId = $profession->profession_id;
+
+            $professions = [$professionId => [
+                'name'                => $profession->name,
+                'code'                => $profession->code,
+                'employeesCount'      => 1,
+                'womanEmployeesCount' => intval($employee->gender),
+            ]];
+            $factors = $position->getFactorsCombinedNames();
+
+            if (isset($departments[ $departmentId ])) {
+                $existingProfessions = $departments[ $departmentId ]['professions'];
+                $existingFactors = $departments[ $departmentId ]['factors'];
+
+                if (isset($existingProfessions[ $professionId ])) {
+                    $existingProfessions[ $professionId ]['employeesCount'] +=
+                        $professions[ $professionId ]['employeesCount'];
+                    $existingProfessions[ $professionId ]['womanEmployeesCount'] +=
+                        $professions[ $professionId ]['womanEmployeesCount'];
+                }
+                $professions = $existingProfessions + $professions;
+                $factors = array_unique(array_merge($factors, $existingFactors));
+            }
+
+            $departments[ $departmentId ] = [
+                'name'        => $department->name,
+                'professions' => $professions,
+                'factors'     => $factors,
+            ];
+
+            $employeesTotalCount++;
+            $womanEmployeesTotalCount += intval($employee->gender);
+        }
+
+        $break = ','.$this->getTemplateLineBreak();
+        $departmentsRows = [];
+        foreach (array_values($departments) as $key => $department) {
+            $professionsNames = array_column($department['professions'], 'name');
+            $professionsCodes = array_column($department['professions'], 'code');
+            $professionsEmployeesCounts = array_column($department['professions'], 'employeesCount');
+            $professionsWomanEmployeesCounts = array_column($department['professions'], 'womanEmployeesCount');
+
+            $departmentsRows[] = [
+                'departmentNumber'                     => $key + 1,
+                'departmentName'                       => $department['name'],
+                'departmentProfessionsNames'           => implode($break, $professionsNames),
+                'departmentProfessionsCodes'           => implode($break, $professionsCodes),
+                'departmentProfessionsEmployeesCounts' => implode($break, $professionsEmployeesCounts),
+                'departmentFactors'                    => implode($break, $department['factors']),
+                'departmentEmployeesTotalCount'        => array_sum($professionsEmployeesCounts),
+                'departmentWomanEmployeesTotalCount'   => array_sum($professionsWomanEmployeesCounts),
+            ];
+        }
+
         $this->setTemplate('workers-categories-act.docx');
+        $this->setAttachmentName('АктКатегорійПрацівників_');
 
         $this->setDocumentValues([
-            'currentYear'            => date('Y'),
-            'employeeSecondName'     => 'Труш',
-            'employeeFirstName'      => 'Артем',
-            'employeeMiddleName'     => 'Юрійович',
-            'employeeBirthYear'      => '1998',
-            'employeeProfessionCode' => '00123',
-            'employeeProfessionName' => 'програмист',
-            'employeeFactors'        => 'кислота, луги',
+            'currentYear'               => date('Y'),
+            'employeesTotalCount'       => $employeesTotalCount,
+            'womanEmployeesTotalCount'  => $womanEmployeesTotalCount,
         ]);
+
+        $this->setDocumentTableRows($departmentsRows);
 
         $this->createAndReturnDocument();
     }

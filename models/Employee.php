@@ -74,9 +74,9 @@ class Employee extends ActiveRecord
         );
     }
 
-    public function getBirthDate($format = 'Y-m-d')
+    public function getFormattedDate($field, $format = 'Y-m-d')
     {
-        return $this->birth_date ? date($format, strtotime($this->birth_date)) : '';
+        return $this->$field ? date($format, strtotime($this->$field)) : '';
     }
 
     public function getHumanWeight()
