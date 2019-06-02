@@ -63,7 +63,6 @@ $(\'body\').on(\'click\',\'a.del-profession\',function(e){
                         'layout'       => '{items}',
                         'columns'      =>
                             [
-                                'profession_id:integer:ID',
                                 'name:text:Назва',
                                 'code:text:Код',
                                 [

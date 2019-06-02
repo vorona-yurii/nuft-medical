@@ -63,7 +63,6 @@ $(\'body\').on(\'click\',\'a.del-factor\',function(e){
                         'layout'       => '{items}',
                         'columns'      =>
                             [
-                                'factor_id:integer:ID',
                                 'name:text:Назва фактору',
                                 'code:text:Код',
                                 [

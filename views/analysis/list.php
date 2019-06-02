@@ -63,7 +63,6 @@ $(\'body\').on(\'click\',\'a.del-analysis\',function(e){
                         'layout'       => '{items}',
                         'columns'      =>
                             [
-                                'analysis_id:integer:ID',
                                 'name:text:Назва аналізу',
                                 [
                                     'label'  => 'Дії',

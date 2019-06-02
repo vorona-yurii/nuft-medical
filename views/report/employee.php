@@ -28,7 +28,6 @@ $this->title = 'Звіти - Працівники';
                         'layout'       => '{items}',
                         'columns'      =>
                             [
-                                'employee_id:integer:ID',
                                 'full_name:text:ПІБ',
                                 [
                                     'label'  => 'Звіти',

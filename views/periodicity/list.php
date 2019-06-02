@@ -63,7 +63,6 @@ $(\'body\').on(\'click\',\'a.del-periodicity\',function(e){
                         'layout'       => '{items}',
                         'columns'      =>
                             [
-                                'periodicity_id:integer:ID',
                                 'name:text:Період',
                                 [
                                     'label'  => 'Дії',

@@ -63,7 +63,6 @@ $(\'body\').on(\'click\',\'a.del-employee\',function(e){
                         'layout'       => '{items}',
                         'columns'      =>
                             [
-                                'employee_id:integer:ID',
                                 'full_name:text:ПІБ',
                                 'phone:text:Телефон',
                                 'email:text:Email',
