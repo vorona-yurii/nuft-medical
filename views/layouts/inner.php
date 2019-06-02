@@ -62,8 +62,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                         'items'   => [
                             [ 'label' => 'Працівники', 'url' => [ "employee/list" ] ],
                             [ 'label' => 'Структурні підрозділи', 'url' => [ "department/list" ] ],
-                            [ 'label' => 'Загальні професії', 'url' => [ "page/edit/" . $blog_parent->url ] ],
-                            [ 'label' => 'Посади підрозділів', 'url' => [ "page/edit/" . $blog_parent->url ] ],
+                            [ 'label' => 'Загальні професії', 'url' =>  [ "profession/list" ] ],
+                            [ 'label' => 'Посади підрозділів', 'url' =>  [ "profession-work/list" ] ],
                         ],
                         'options' => [ 'class' => 'nav nav-second-level collapse' ],
                     ] )
@@ -83,10 +83,19 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                         'options' => [ 'class' => 'nav nav-second-level collapse' ],
                     ] )
                     . '</li>',
-                    [
-                        'label' => '<i class="fa fa-file-text-o"></i> <span class="nav-label">Звіти</span>',
-                        'url'   => [ 'user/tree-ref' ],
-                    ],
+                    '<li>
+                        <a>
+                            <i class="fa fa-file-text-o"></i>
+                            <span class="nav-label">Звіти</span> 
+                            <span class="caret"></span>
+                        </a>' .
+                    Nav::widget( [
+                        'items'   => [
+                            [ 'label' => 'Працівники', 'url' => [ "report/employee" ] ],
+                        ],
+                        'options' => [ 'class' => 'nav nav-second-level collapse' ],
+                    ] )
+                    . '</li>',
                 ],
 
                 'options' => [ 'class' => 'nav', 'id' => 'side-menu' ],

@@ -95,11 +95,11 @@ $config = [
                 'analysis/<action>'       => 'analysis/change',
 
                  /***************** report ******************/
-                'report/1' => 'report/employee-medical-card/download',
-                'report/2' => 'report/employee-medical-referral/download',
-                'report/3' => 'report/medical-examination-schedule/download',
-                'report/4' => 'report/medical-examination-workers-list/download',
-                'report/5' => 'report/workers-categories-act/download',
+                'report/employee-medical-card/download/<id>'     => 'report/employee-medical-card/download',
+                'report/employee-medical-referral/download/<id>' => 'report/employee-medical-referral/download',
+                'report/3'      => 'report/medical-examination-schedule/download',
+                'report/4'      => 'report/medical-examination-workers-list/download',
+                'report/5'      => 'report/workers-categories-act/download',
 
                 '<controller>/<action>'   => '<controller>/<action>',
             ],

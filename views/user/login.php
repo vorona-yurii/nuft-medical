@@ -30,9 +30,7 @@ $this->title = 'Вхід в систему';
 
             <?= $form->field( $model, 'rememberMe' )->checkbox( [
                 'template' => "{input} {label}{error}\n",
-            ] )->label(
-                'Запам\'ятати меня'
-            ) ?>
+            ] )->label('Запам\'ятати мене'); ?>
 
             <div class="form-group">
                 <?= Html::submitButton( 'Ввійти', [ 'class' => 'btn btn-primary col-md-12', 'name' => 'login-button' ] ) ?>
