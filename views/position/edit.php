@@ -87,6 +87,35 @@ $this->title = ($id ? 'Редагування' : 'Додавання' ). ' по�
                     </div>
                 </div>
                 <div class="ibox-content">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>З'язані дані</h5>
+                            <div class="ibox-tools">
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12 col-lg-12 field-positionform-factors">
+                                    <label class="control-label">Шкідливі фактори</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'name'    => 'PositionForm[factors]',
+                                        'value'   => \app\models\PositionFactor::getPositionFactors($model->position_id),
+                                        'data'    => \app\models\Factor::getAllFactors(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть фактори',
+                                            'multiple' => true
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content">
                     <div class="form-horizontal">
                         <div class="form-group" style="margin: 0;">
                             <div class="col-xs-6">

@@ -21,4 +21,19 @@ class Factor extends ActiveRecord
         return '{{%factor}}';
     }
 
+    /**
+     * @return array
+     */
+    public static function getAllFactors()
+    {
+        $return[ null ] = 'Не вказано';
+
+        $factors = self::find()->all();
+        foreach ($factors as $factor) {
+            $return[$factor->factor_id] = $factor->name;
+        }
+
+        return $return;
+    }
+
 }

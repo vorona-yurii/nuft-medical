@@ -51,6 +51,67 @@ $this->title = ($id ? 'Редагування' : 'Додавання' ). ' пр�
                     </div>
                 </div>
                 <div class="ibox-content">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>З'язані дані</h5>
+                            <div class="ibox-tools">
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12 col-lg-4 field-professionform-analysis">
+                                    <label class="control-label">Аналізи</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'name'    => 'ProfessionForm[analysis]',
+                                        'value'   => \app\models\ProfessionAnalysis::getProfessionAnalysis($model->profession_id),
+                                        'data'    => \app\models\Analysis::getAllAnalysis(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть аналізи',
+                                            'multiple' => true
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
+                                <div class="col-xs-12 col-lg-4 field-professionform-doctor">
+                                    <label class="control-label">Лікарі</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'name'    => 'ProfessionForm[doctor]',
+                                        'value'   => \app\models\ProfessionDoctor::getProfessionDoctor($model->profession_id),
+                                        'data'    => \app\models\Doctor::getAllDoctors(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть лікарів',
+                                            'multiple' => true
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
+                                <div class="col-xs-12 col-lg-4 field-professionform-periodicity">
+                                    <label class="control-label">Період</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'name'    => 'ProfessionForm[periodicity]',
+                                        'value'   => \app\models\ProfessionPeriodicity::getProfessionPeriodicity($model->profession_id),
+                                        'data'    => \app\models\Periodicity::getAllPeriodicity(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть період',
+                                            'multiple' => false
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content">
                     <div class="form-horizontal">
                         <div class="form-group" style="margin: 0;">
                             <div class="col-xs-6">

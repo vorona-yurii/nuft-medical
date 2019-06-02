@@ -21,4 +21,19 @@ class FactorPeriodicity extends ActiveRecord
         return '{{%factor_periodicity}}';
     }
 
+    /**
+     * @param $factor_id
+     * @return array
+     */
+    public static function getFactorPeriodicity($factor_id)
+    {
+        $return = [];
+        $factorPeriodicity = self::findAll(['factor_id' => $factor_id]);
+        foreach ($factorPeriodicity as $factorPeriodicity_item) {
+            $return[] = $factorPeriodicity_item->periodicity_id;
+        }
+
+        return $return;
+    }
+
 }

@@ -20,4 +20,19 @@ class Doctor extends ActiveRecord
         return '{{%doctor}}';
     }
 
+    /**
+     * @return array
+     */
+    public static function getAllDoctors()
+    {
+        $return[ null ] = 'Не вказано';
+
+        $doctors = self::find()->all();
+        foreach ($doctors as $doctor) {
+            $return[$doctor->doctor_id] = $doctor->name;
+        }
+
+        return $return;
+    }
+
 }

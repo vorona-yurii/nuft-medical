@@ -51,6 +51,67 @@ $this->title = ($id ? 'Редагування' : 'Додавання' ). ' шк�
                     </div>
                 </div>
                 <div class="ibox-content">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>З'язані дані</h5>
+                            <div class="ibox-tools">
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12 col-lg-4 field-factorform-analysis">
+                                    <label class="control-label">Аналізи</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'name'    => 'FactorForm[analysis]',
+                                        'value'   => \app\models\FactorAnalysis::getFactorAnalysis($model->factor_id),
+                                        'data'    => \app\models\Analysis::getAllAnalysis(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть аналізи',
+                                            'multiple' => true
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
+                                <div class="col-xs-12 col-lg-4 field-factorform-doctor">
+                                    <label class="control-label">Лікарі</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'name'    => 'FactorForm[doctor]',
+                                        'value'   => \app\models\FactorDoctor::getFactorDoctor($model->factor_id),
+                                        'data'    => \app\models\Doctor::getAllDoctors(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть лікарів',
+                                            'multiple' => true
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
+                                <div class="col-xs-12 col-lg-4 field-factorform-periodicity">
+                                    <label class="control-label">Період</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'name'    => 'FactorForm[periodicity]',
+                                        'value'   => \app\models\FactorPeriodicity::getFactorPeriodicity($model->factor_id),
+                                        'data'    => \app\models\Periodicity::getAllPeriodicity(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть період',
+                                            'multiple' => false
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content">
                     <div class="form-horizontal">
                         <div class="form-group" style="margin: 0;">
                             <div class="col-xs-6">

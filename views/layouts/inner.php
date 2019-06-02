@@ -40,7 +40,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
         <div class="sidebar-collapse">
             <?php
             $class_organization = in_array($this->context->route, ['employee/list', 'department/list', 'profession/list', 'position/list' ]) ? 'active' : '';
-            $class_other        = in_array($this->context->route, ['factor/list', 'doctor/list', 'analysis/list']) ? 'active' : '';
+            $class_other        = in_array($this->context->route, ['factor/list', 'doctor/list', 'analysis/list', 'periodicity/list']) ? 'active' : '';
             $class_report       = in_array($this->context->route, ['report/employee', 'report/list']) ? 'active' : '';
             echo Nav::widget( [
                 'encodeLabels' => false,
@@ -81,6 +81,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                             [ 'label' => 'Шкідливі фактори', 'url' => [ "factor/list" ] ],
                             [ 'label' => 'Лікарі', 'url' => [ "doctor/list" ] ],
                             [ 'label' => 'Аналізи', 'url' => [ "analysis/list" ] ],
+                            [ 'label' => 'Періодичність', 'url' => [ "periodicity/list" ] ],
                         ],
                         'options' => [ 'class' => 'nav nav-second-level collapse' ],
                     ] )

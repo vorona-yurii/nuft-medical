@@ -21,4 +21,19 @@ class ProfessionDoctor extends ActiveRecord
         return '{{%profession_doctor}}';
     }
 
+    /**
+     * @param $profession_id
+     * @return array
+     */
+    public static function getProfessionDoctor($profession_id)
+    {
+        $return = [];
+        $professionDoctors = self::findAll(['profession_id' => $profession_id]);
+        foreach ($professionDoctors as $professionDoctor) {
+            $return[] = $professionDoctor->doctor_id;
+        }
+
+        return $return;
+    }
+
 }

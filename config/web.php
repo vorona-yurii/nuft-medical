@@ -115,6 +115,13 @@ $config = [
                 'analysis/<action>/<id>'  => 'analysis/change',
                 'analysis/<action>'       => 'analysis/change',
 
+                /*************** periodicity *****************/
+                'periodicity'                => 'periodicity/list',
+                'periodicity/list'           => 'periodicity/list',
+                'periodicity/delete'         => 'periodicity/delete',
+                'periodicity/<action>/<id>'  => 'periodicity/change',
+                'periodicity/<action>'       => 'periodicity/change',
+
                  /***************** report ******************/
                 'report/employee-medical-card/download'     => 'report/employee-medical-card-download',
                 'report/employee-medical-referral/download' => 'report/employee-medical-referral-download',

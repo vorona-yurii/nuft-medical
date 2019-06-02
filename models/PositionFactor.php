@@ -21,4 +21,19 @@ class PositionFactor extends ActiveRecord
         return '{{%position_factor}}';
     }
 
+    /**
+     * @param $position_id
+     * @return array
+     */
+    public static function getPositionFactors($position_id)
+    {
+        $return = [];
+        $positionFactors = PositionFactor::findAll(['position_id' => $position_id]);
+        foreach ($positionFactors as $positionFactor) {
+            $return[] = $positionFactor->factor_id;
+        }
+
+        return $return;
+    }
+
 }
