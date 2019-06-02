@@ -31,7 +31,7 @@ $this->title = 'Звіти - Працівники';
                                 'employee_id:integer:ID',
                                 'full_name:text:ПІБ',
                                 [
-                                    'label'  => 'Дії',
+                                    'label'  => 'Звіти',
                                     'format' => 'raw',
                                     'value'  => function ( $searchModel) {
                                         $buttons = '';
@@ -56,7 +56,7 @@ $this->title = 'Звіти - Працівники';
                                                 'employeeId' => $searchModel->employee_id
                                             ]),
                                             [
-                                                'class' => 'btn btn-primary btn-edit-employee',
+                                                'class' => 'btn btn-info btn-edit-employee',
                                                 'target'=>'_blank',
                                                 'data-pjax' => '0'
                                             ]

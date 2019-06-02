@@ -5,9 +5,8 @@
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-use app\models\Employee;
 
-$this->title = ($id ? 'Редагування' : 'Додавання' ). ' підрозділу';
+$this->title = ($id ? 'Редагування' : 'Додавання' ). ' професії';
 
 ?>
 
@@ -44,29 +43,9 @@ $this->title = ($id ? 'Редагування' : 'Додавання' ). ' пі�
                         <div class="ibox-content">
                             <div class="row">
                                 <?= $form->field( $model, 'name', ['options' => ['class' => 'col-xs-12 col-lg-6']])
-                                    ->label( 'Назва підрозділу' )->textInput(); ?>
-
-                                <div class="col-xs-12 col-lg-6 field-departmentform-head_employee_id">
-                                    <label class="control-label" for="departmentform-head_employee_id">Керівник підрозділу</label>
-                                    <?php echo \kartik\select2\Select2::widget([
-                                        'id'      => "departmentform-head_employee_id",
-                                        'name'    => 'DepartmentForm[head_employee_id]',
-                                        'value'   => $model->head_employee_id,
-                                        'data'    => Employee::getAllEmployees(),
-                                        'options' => [
-                                            'placeholder' => 'Виберіть керівника підрозділу',
-                                            'multiple' => false
-                                        ],
-                                        'pluginOptions' => [
-                                            'tags' => false,
-                                            'maximumInputLength' => 10
-                                        ],
-                                    ]); ?>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <?= $form->field( $model, 'additional_info', ['options' => ['class' => 'col-xs-12 col-lg-12']])
-                                    ->label( 'Додаткова інформація ' )->textarea(['rows' => 5]); ?>
+                                    ->label( 'Назва' )->textInput(); ?>
+                                <?= $form->field( $model, 'code', ['options' => ['class' => 'col-xs-12 col-lg-6']])
+                                    ->label( 'Код' )->textInput(); ?>
                             </div>
                         </div>
                     </div>

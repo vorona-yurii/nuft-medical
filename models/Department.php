@@ -22,4 +22,19 @@ class Department extends ActiveRecord
         return '{{%department}}';
     }
 
+    /**
+     * @return array
+     */
+    public static function getAllDepartments()
+    {
+        $return[ null ] = 'Не вказано';
+
+        $departments = self::find()->all();
+        foreach ($departments as $department) {
+            $return[$department->department_id] = $department->name;
+        }
+
+        return $return;
+    }
+
 }

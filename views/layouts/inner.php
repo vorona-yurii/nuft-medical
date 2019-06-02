@@ -39,9 +39,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <?php
-            $class_organization = in_array($this->context->route, ['employee/list', 'department/list', 'profession/list', 'profession-work/list' ]) ? 'active' : '';
+            $class_organization = in_array($this->context->route, ['employee/list', 'department/list', 'profession/list', 'position/list' ]) ? 'active' : '';
             $class_other        = in_array($this->context->route, ['doctor/list', 'analysis/list']) ? 'active' : '';
-            $class_report       = in_array($this->context->route, ['report/employee']) ? 'active' : '';
+            $class_report       = in_array($this->context->route, ['report/employee', 'report/list']) ? 'active' : '';
             echo Nav::widget( [
                 'encodeLabels' => false,
                 'items'        => [
@@ -65,7 +65,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                             [ 'label' => 'Працівники', 'url' => [ "employee/list" ] ],
                             [ 'label' => 'Структурні підрозділи', 'url' => [ "department/list" ] ],
                             [ 'label' => 'Загальні професії', 'url' =>  [ "profession/list" ] ],
-                            [ 'label' => 'Посади підрозділів', 'url' =>  [ "profession-work/list" ] ],
+                            [ 'label' => 'Посади підрозділів', 'url' =>  [ "position/list" ] ],
                         ],
                         'options' => [ 'class' => 'nav nav-second-level collapse' ],
                     ] )
@@ -94,6 +94,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                     Nav::widget( [
                         'items'   => [
                             [ 'label' => 'Працівники', 'url' => [ "report/employee" ] ],
+                            [ 'label' => 'Списки', 'url' => [ "report/list" ] ],
                         ],
                         'options' => [ 'class' => 'nav nav-second-level collapse' ],
                     ] )

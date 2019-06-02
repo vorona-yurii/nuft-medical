@@ -25,4 +25,20 @@ class Profession extends ActiveRecord
     {
         return $this->name.' ('.$this->code.')';
     }
+
+    /**
+     * @return array
+     */
+    public static function getAllProfessions()
+    {
+        $return[ null ] = 'Не вказано';
+
+        $professions = self::find()->all();
+        foreach ($professions as $profession) {
+            $return[$profession->profession_id] = $profession->name;
+        }
+
+        return $return;
+    }
+
 }

@@ -5,9 +5,8 @@
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-use app\models\Employee;
 
-$this->title = ($id ? 'Редагування' : 'Додавання' ). ' підрозділу';
+$this->title = ($id ? 'Редагування' : 'Додавання' ). ' посади';
 
 ?>
 
@@ -43,18 +42,34 @@ $this->title = ($id ? 'Редагування' : 'Додавання' ). ' пі�
                         </div>
                         <div class="ibox-content">
                             <div class="row">
-                                <?= $form->field( $model, 'name', ['options' => ['class' => 'col-xs-12 col-lg-6']])
-                                    ->label( 'Назва підрозділу' )->textInput(); ?>
-
-                                <div class="col-xs-12 col-lg-6 field-departmentform-head_employee_id">
-                                    <label class="control-label" for="departmentform-head_employee_id">Керівник підрозділу</label>
+                                <?= $form->field( $model, 'name', ['options' => ['class' => 'col-xs-12 col-lg-4']])
+                                    ->label( 'Назва' )->textInput(); ?>
+                                <div class="col-xs-12 col-lg-4 field-positionform-department_id">
+                                    <label class="control-label" for="positionform-department_id">Підрозділ</label>
                                     <?php echo \kartik\select2\Select2::widget([
-                                        'id'      => "departmentform-head_employee_id",
-                                        'name'    => 'DepartmentForm[head_employee_id]',
-                                        'value'   => $model->head_employee_id,
-                                        'data'    => Employee::getAllEmployees(),
+                                        'id'      => "positionform-department_id",
+                                        'name'    => 'PositionForm[department_id]',
+                                        'value'   => $model->department_id,
+                                        'data'    => \app\models\Department::getAllDepartments(),
                                         'options' => [
-                                            'placeholder' => 'Виберіть керівника підрозділу',
+                                            'placeholder' => 'Виберіть підрозділ',
+                                            'multiple' => false
+                                        ],
+                                        'pluginOptions' => [
+                                            'tags' => false,
+                                            'maximumInputLength' => 10
+                                        ],
+                                    ]); ?>
+                                </div>
+                                <div class="col-xs-12 col-lg-4 field-positionform-profession_id">
+                                    <label class="control-label" for="positionform-profession_id">Професія</label>
+                                    <?php echo \kartik\select2\Select2::widget([
+                                        'id'      => "positionform-profession_id",
+                                        'name'    => 'PositionForm[profession_id]',
+                                        'value'   => $model->profession_id,
+                                        'data'    => \app\models\Profession::getAllProfessions(),
+                                        'options' => [
+                                            'placeholder' => 'Виберіть професію',
                                             'multiple' => false
                                         ],
                                         'pluginOptions' => [
@@ -66,7 +81,7 @@ $this->title = ($id ? 'Редагування' : 'Додавання' ). ' пі�
                             </div>
                             <div class="row">
                                 <?= $form->field( $model, 'additional_info', ['options' => ['class' => 'col-xs-12 col-lg-12']])
-                                    ->label( 'Додаткова інформація ' )->textarea(['rows' => 5]); ?>
+                                    ->label( 'Додаткова інформація' )->textarea(['rows' => 5]); ?>
                             </div>
                         </div>
                     </div>

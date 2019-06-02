@@ -80,6 +80,20 @@ $config = [
                 'department/<action>/<id>'  => 'department/change',
                 'department/<action>'       => 'department/change',
 
+                /***************** profession ******************/
+                'profession'                => 'profession/list',
+                'profession/list'           => 'profession/list',
+                'profession/delete'         => 'profession/delete',
+                'profession/<action>/<id>'  => 'profession/change',
+                'profession/<action>'       => 'profession/change',
+
+                /***************** position ******************/
+                'position'                => 'position/list',
+                'position/list'           => 'position/list',
+                'position/delete'         => 'position/delete',
+                'position/<action>/<id>'  => 'position/change',
+                'position/<action>'       => 'position/change',
+
                 /*************** doctor *****************/
                 'doctor'                => 'doctor/list',
                 'doctor/list'           => 'doctor/list',

@@ -14,7 +14,6 @@ class m181024_102018_create_table_employee extends Migration
     {
         $this->createTable( '{{%employee}}', [
             'employee_id'                     => $this->primaryKey(),
-            'department_id'                   => $this->integer(),
             'full_name'                       => $this->string(),
             'phone'                           => $this->string(),
             'email'                           => $this->string(),
@@ -31,15 +30,6 @@ class m181024_102018_create_table_employee extends Migration
             'arterial_pressure'               => $this->string(50),
             'medical_conclusion'              => $this->text()
         ], $this->tableOptions );
-
-        $this->addForeignKey(
-            'fk-employee-department_id',
-            'employee',
-            'department_id',
-            'department',
-            'department_id',
-            'CASCADE'
-        );
 
         $this->addForeignKey(
             'fk-employee-position_id',
