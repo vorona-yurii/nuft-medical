@@ -11,6 +11,17 @@ use yii\db\ActiveRecord;
 
 class Periodicity extends ActiveRecord
 {
+    private $reason = '';
+
+    public function setReason($reason)
+    {
+        $this->reason = $reason;
+    }
+
+    public function getReason()
+    {
+        return $this->reason;
+    }
 
     /**
      * @inheritdoc
@@ -19,5 +30,4 @@ class Periodicity extends ActiveRecord
     {
         return '{{%periodicity}}';
     }
-
 }

@@ -105,8 +105,6 @@ class ReportController extends Controller
 
     private function returnDocumentForDownload()
     {
-        error_log($this->attachmentName);
-
         $attachment = $this->document->save();
         if (file_exists($attachment)) {
             Yii::$app->response->sendFile($attachment, $this->attachmentName);
@@ -189,9 +187,10 @@ class ReportController extends Controller
         }
 
         list($position, $department, $profession) = $employee->getDependentData();
+        $doctorsNames = $position->getDoctorsNames();
 
         $this->setTemplate('employee-medical-card.docx');
-        $this->setAttachmentName('КарткаПрацівника_'.$employee->getNameInitials());
+        $this->setAttachmentName('Картка_'.$employee->getNameInitials());
 
         $this->setDocumentValues([
             'employeeFullName'   => $employee->full_name,
@@ -201,19 +200,26 @@ class ReportController extends Controller
             'employeeCompany'    => 'Національний Університет Харчових Технологій',
             'employeeDepartment' => $department->name,
             'employeeProfession' => $profession->getCombinedName(),
-            'factors'            => '',
-            'doctors'            => '',
-            'analyzes'           => '',
+            'factors'            => implode(', ', $position->getFactorsCombinedNames()),
+            'periodicities'      => implode(', ', $position->getPeriodicitiesCombinedNames()),
+            'doctors'            => implode(', ', $doctorsNames),
+            'analyzes'           => implode(', ', $position->getAnalyzesNames()),
             'employeeWeight'     => $employee->getHumanWeight(),
             'employeeHeight'     => $employee->getHumanHeight(),
             'employeeAT'         => $employee->arterial_pressure,
         ]);
 
+        $doctors = array_merge($doctorsNames, ['Інші фахівці']);
+        $doctorsRows = [];
+        foreach ($doctors as $doctorKey => $doctorName) {
+            $doctorsRows[] = [
+                'doctorNumber' => $doctorKey + 1,
+                'doctorName' => $doctorName
+            ];
+        }
+
         $this->setDocumentBlocks([
-            'doctorBlock' => [
-                ['doctorNumber' => 1, 'doctorName' => 'Хирург'],
-                ['doctorNumber' => 2, 'doctorName' => 'Невропатолог'],
-            ],
+            'doctorBlock' => $doctorsRows,
         ]);
 
         $this->createAndReturnDocument();
@@ -226,7 +232,10 @@ class ReportController extends Controller
             return $this->reportCreationError();
         }
 
+        list($position, $department, $profession) = $employee->getDependentData();
+
         $this->setTemplate('employee-medical-referral.docx');
+        $this->setAttachmentName('Направлення_'.$employee->getNameInitials());
 
         $this->setDocumentValues([
             'currentYear'            => date('Y'),
@@ -234,9 +243,9 @@ class ReportController extends Controller
             'employeeFirstName'      => $employee->getNamePart('first'),
             'employeeMiddleName'     => $employee->getNamePart('middle'),
             'employeeBirthYear'      => $employee->getBirthDate('Y'),
-            'employeeProfessionCode' => '00123',
-            'employeeProfessionName' => 'програмист',
-            'employeeFactors'        => 'кислота, луги',
+            'employeeProfessionCode' => $profession->code,
+            'employeeProfessionName' => $profession->name,
+            'employeeFactors'        => implode(', ', $position->getFactorsCombinedNames()),
         ]);
 
         $this->createAndReturnDocument();
