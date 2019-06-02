@@ -2,30 +2,36 @@
 
 namespace app\controllers\report;
 
+use app\models\Department;
+use app\models\Employee;
+
 class EmployeeMedicalCardController extends BaseController
 {
     protected $template = 'employee-medical-card.docx';
 
-    public function actionDownload()
+    public function actionDownload($id)
     {
-        $this->documentValues = [
-            'employeeFullName'       => 'Труш',
-            'employeeGender'         => '',
-            'employeeBirthYear'      => '',
-            'employeeResidence'      => '',
-            'employeeCompany'        => 'Національний Університет Харчових Технологій',
-            'employeeDepartment'     => '',
-            'employeeProfession'     => '',
-            'employeeFactors'        => '',
-            // 'employeeFirstName'      => 'Артем',
-            // 'employeeMiddleName'     => 'Юрійович',
-            // 'employeeBirthYear'      => '1998',
-            // 'employeeProfessionCode' => '00123',
-            // 'employeeProfessionName' => 'програмист',
-            // 'employeeFactors'        => 'кислота, луги',
-        ];
+        $employee = Employee::findOne($id);
+        if( $employee ) {
+            $this->documentValues = [
+                'employeeFullName'       => $employee->full_name,
+                'employeeGender'         => $employee->gender,
+                'employeeBirthYear'      => $employee->birth_date,
+                'employeeResidence'      => $employee->residence,
+                'employeeCompany'        => 'Національний Університет Харчових Технологій',
+                'employeeDepartment'     => Department::findOne($employee->department_id) ? Department::findOne($employee->department_id)->name : '',
+                'employeeProfession'     => $employee->position_id,
+                'employeeFactors'        => '',
+                // 'employeeFirstName'      => 'Артем',
+                // 'employeeMiddleName'     => 'Юрійович',
+                // 'employeeBirthYear'      => '1998',
+                // 'employeeProfessionCode' => '00123',
+                // 'employeeProfessionName' => 'програмист',
+                // 'employeeFactors'        => 'кислота, луги',
+            ];
 
-        $this->createAndReturnDocument();
+            $this->createAndReturnDocument();
+        }
     }
 }
 
