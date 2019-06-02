@@ -13,7 +13,7 @@ class BaseController extends Controller
 
     private $document = null;
     protected $documentValues = [];
-    protected $documentTables = [];
+    protected $documentTableRows = [];
 
     protected function createAndReturnDocument()
     {
@@ -36,7 +36,16 @@ class BaseController extends Controller
             $this->document->setValue($key, $value);
         }
 
-        // $this->document->cloneRow('tableRow', 5);
+        if (!empty($this->documentTableRows)) {
+            $rows = $this->documentTableRows;
+            $firstColumnName = array_keys($rows[0])[0];
+            $this->document->cloneRow($firstColumnName, count($rows));
+            foreach ($rows as $rowId => $row) {
+                foreach ($row as $key => $value) {
+                    $this->document->setValue($key.'#'.($rowId + 1), $value);
+                }
+            }
+        }
     }
 
     protected function returnDocumentForDownload($attachmentName = 'Report.docx')
