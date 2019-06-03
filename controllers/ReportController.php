@@ -10,6 +10,7 @@ use Codeception\PHPUnit\ResultPrinter\Report;
 use PhpOffice\PhpWord\PhpWord;
 use app\models\Department;
 use app\models\Employee;
+use app\models\Report as ReportModel;
 use app\models\search\EmployeeSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -262,9 +263,20 @@ class ReportController extends Controller
         $this->createAndReturnDocument();
     }
 
-    public function actionMedicalExaminationScheduleDownload()
+    public function actionMedicalExaminationScheduleDownload($reportId)
     {
+        $report = ReportModel::findOne($reportId);
+        if (!$report) {
+            return $this->reportCreationError();
+        }
+
+        $groups = $report->getEmployeesGroups();
+        if (!$groups) {
+            return $this->reportCreationError();
+        }
+
         $this->setTemplate('medical-examination-schedule.docx');
+        $this->setAttachmentName('ГрафікМедогляду_'.$report->name);
 
         $this->setDocumentValues([
             'currentYear'            => date('Y'),
@@ -280,20 +292,24 @@ class ReportController extends Controller
         $this->createAndReturnDocument();
     }
 
-    public function actionMedicalExaminationWorkersListDownload()
+    public function actionMedicalExaminationWorkersListDownload($reportId)
     {
-        // @TODO
-        $employees = [];
-        for ($i=0; $i < 1; $i++) {
-            $employees[] = Employee::findOne(1);
+        $report = ReportModel::findOne($reportId);
+        if (!$report) {
+            return $this->reportCreationError();
+        }
+
+        $employees = $report->getUniqueEmployees();
+        if (!$employees) {
+            return $this->reportCreationError();
         }
 
         $employeesRows = [];
-        foreach ($employees as $key => $employee) {
+        foreach ($employees as $employee) {
             list($position, $department, $profession) = $employee->getDependentData();
-
-            $employeesRows[] = [
-                'employeeNumber'                     => $key + 1,
+            $index = $employee->getListIndex();
+            $employeesRows[ $index - 1 ] = [
+                'employeeNumber'                     => $index,
                 'employeeFullName'                   => $employee->full_name,
                 'employeeGender'                     => $employee->getGender(),
                 'employeeBirthDate'                  => $employee->getFormattedDate('birth_date'),
@@ -309,7 +325,7 @@ class ReportController extends Controller
         }
 
         $this->setTemplate('medical-examination-workers-list.docx');
-        $this->setAttachmentName('СписокПрацівників_');
+        $this->setAttachmentName('СписокПрацівників_'.$report->name);
 
         $this->setDocumentValues([
             'currentYear' => date('Y'),
@@ -320,15 +336,16 @@ class ReportController extends Controller
         $this->createAndReturnDocument();
     }
 
-    public function actionWorkersCategoriesActDownload()
+    public function actionWorkersCategoriesActDownload($reportId)
     {
-        // @TODO
-        $employees = [];
-        for ($i=0; $i < 100; $i++) {
-            $employees[] = Employee::findOne(1);
+        $report = ReportModel::findOne($reportId);
+        if (!$report) {
+            return $this->reportCreationError();
         }
-        for ($i=0; $i < 50; $i++) {
-            $employees[] = Employee::findOne(2);
+
+        $employees = $report->getUniqueEmployees();
+        if (!$employees) {
+            return $this->reportCreationError();
         }
 
         $departments = [];
@@ -392,7 +409,7 @@ class ReportController extends Controller
         }
 
         $this->setTemplate('workers-categories-act.docx');
-        $this->setAttachmentName('АктКатегорійПрацівників_');
+        $this->setAttachmentName('АктКатегорійПрацівників_'.$report->name);
 
         $this->setDocumentValues([
             'currentYear'               => date('Y'),

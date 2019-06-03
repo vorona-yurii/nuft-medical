@@ -6,7 +6,6 @@ use yii\db\ActiveRecord;
 
 /**
  * @property $employee_id                          integer
- * @property $department_id                        integer
  * @property $full_name                            string
  * @property $phone                                string
  * @property $email                                string
@@ -33,6 +32,18 @@ class Employee extends ActiveRecord
     public static function tableName()
     {
         return '{{%employee}}';
+    }
+
+    private $listIndex = '';
+
+    public function setListIndex($listIndex)
+    {
+        $this->listIndex = $listIndex;
+    }
+
+    public function getListIndex()
+    {
+        return $this->listIndex;
     }
 
     /**
@@ -74,7 +85,7 @@ class Employee extends ActiveRecord
         );
     }
 
-    public function getFormattedDate($field, $format = 'Y-m-d')
+    public function getFormattedDate($field, $format = 'd-m-Y')
     {
         return $this->$field ? date($format, strtotime($this->$field)) : '';
     }
