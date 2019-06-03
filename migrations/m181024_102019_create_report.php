@@ -28,7 +28,7 @@ class m181024_102019_create_report extends Migration
         ], $this->tableOptions );
 
         $this->addForeignKey(
-            'fk-report_groups-report_id',
+            'fk-report_group-report_id',
             'report_group',
             'report_id',
             'report',
