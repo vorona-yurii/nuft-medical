@@ -65,10 +65,34 @@ $(\'body\').on(\'click\',\'a.del-report\',function(e){
                             [
                                 'name:text:Назва',
                                 [
-                                    'label'  => 'Дії',
+                                    'label'  => 'Звіти | Дії',
                                     'format' => 'raw',
                                     'value'  => function ( $searchModel) {
                                         $buttons = '';
+
+                                        $buttons .= '<div class="btn-group">' . Html::a(
+                                                'Список',
+                                                Url::toRoute( [
+                                                    "report/medical-examination-schedule/download",
+                                                    'reportId' => $searchModel->report_id
+                                                ] ),
+                                                [ 'class' => 'btn btn-success' ] );
+                                        $buttons .= Html::a(
+                                            'Графік',
+                                            Url::toRoute( [
+                                                "report/medical-examination-workers-list/download",
+                                                'reportId' => $searchModel->report_id
+                                            ] ),
+                                            [ 'class' => 'btn btn-info'] );
+                                        $buttons .= Html::a(
+                                                'Акт',
+                                                Url::toRoute( [
+                                                    "report/workers-categories-act/download",
+                                                    'reportId' => $searchModel->report_id
+                                                ] ),
+                                                [ 'class' => 'btn btn-primary'] ) . '</div>';
+
+                                        $buttons .= '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;';
 
                                         $buttons .= '<div class="btn-group">' . Html::a( '<i class="fa fa-pencil" aria-hidden="true"></i>',
                                                 Url::toRoute( [ "report/edit", 'id' => $searchModel->report_id ] ),

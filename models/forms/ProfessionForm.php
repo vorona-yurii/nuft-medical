@@ -29,7 +29,8 @@ class ProfessionForm extends Profession
         return [
             [ ['profession_id'], 'integer' ],
             [ ['name', 'code'], 'string' ],
-            [ ['name', 'code', 'analysis', 'doctor', 'periodicity'], 'required', 'message' => 'Обов\'язкове поле' ],
+            [ ['analysis', 'doctor', 'periodicity'], 'safe' ],
+            [ ['name', 'code'], 'required', 'message' => 'Обов\'язкове поле' ],
         ];
     }
 

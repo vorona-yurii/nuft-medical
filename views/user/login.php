@@ -12,8 +12,9 @@ $this->title = 'Вхід в систему';
 ?>
 <div class="login-page">
     <div class="container">
-        <div class="col-md-4 lofin-form-wrap">
-            <h1><?= 'Авторизация' ?></h1>
+        <div class="col-md-4 login-form-wrap">
+            <img alt="image" class="img-circle" src="<?= \yii\helpers\Url::to( '@web/images/nuft-logo.png' ); ?>">
+            <h1><?= 'Вхід в систему' ?></h1>
 
             <?php $form = ActiveForm::begin( [
                 'id'          => 'login-form',

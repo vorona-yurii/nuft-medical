@@ -49,7 +49,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                         <div class="dropdown profile-element text-center"> 
                              <img alt="image" class="img-circle" src="' . Url::to( '@web/images/nuft-logo.png' ) . '">
                              <span class="block m-t-xs">
-                                <strong>NUFT medical</strong>
+                                <strong>Система контролю медогляду НУХТ</strong>
                              </span>
                         </div>
                         <div class="logo-element">NM</div>
