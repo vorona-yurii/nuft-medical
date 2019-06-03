@@ -45,7 +45,11 @@ class ReportEmployeeSearch extends Employee
         }
 
         if($this->full_name) {
-            $query->andFilterWhere( ['full_name' => $this->full_name] );
+            $query->andFilterWhere( ['like', 'full_name', $this->full_name] );
+        }
+
+        if($this->doctor) {
+            $query->andFilterWhere( ['in', 'full_name', $this->full_name] );
         }
 
         return $dataProvider;

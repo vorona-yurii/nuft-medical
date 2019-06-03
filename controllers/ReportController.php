@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\forms\ReportForm;
 use app\models\ReportGroup;
 use app\models\ReportGroupEmployee;
+use app\models\search\ReportEmployeeSearch;
 use app\models\search\ReportSearch;
 use Codeception\PHPUnit\ResultPrinter\Report;
 use PhpOffice\PhpWord\PhpWord;
@@ -185,7 +186,7 @@ class ReportController extends Controller
      */
     public function actionEmployee()
     {
-        $searchModel = new EmployeeSearch();
+        $searchModel = new ReportEmployeeSearch();
         $dataProvider = $searchModel->search( Yii::$app->request->queryParams );
 
         return $this->render('employee', compact('searchModel', 'dataProvider'));

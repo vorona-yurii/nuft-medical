@@ -42,11 +42,11 @@ class FactorSearch extends Factor
         }
 
         if($this->name) {
-            $query->andFilterWhere( ['name' => $this->name] );
+            $query->andFilterWhere( ['like', 'name', $this->name] );
         }
 
         if($this->code) {
-            $query->andFilterWhere( ['code' => $this->code] );
+            $query->andFilterWhere( ['like', 'code', $this->code] );
         }
 
         return $dataProvider;

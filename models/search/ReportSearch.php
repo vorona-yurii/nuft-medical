@@ -42,7 +42,7 @@ class ReportSearch extends Report
         }
 
         if($this->name) {
-            $query->andFilterWhere( ['name' => $this->name] );
+            $query->andFilterWhere( ['like', 'name', $this->name] );
         }
 
         return $dataProvider;

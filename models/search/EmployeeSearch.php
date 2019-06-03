@@ -46,11 +46,11 @@ class EmployeeSearch extends Employee
         }
 
         if($this->full_name) {
-            $query->andFilterWhere( ['full_name' => $this->full_name] );
+            $query->andFilterWhere( ['like', 'full_name', $this->full_name] );
         }
 
         if($this->phone) {
-            $query->andFilterWhere( ['phone' => $this->phone] );
+            $query->andFilterWhere( ['like', 'phone', $this->phone] );
         }
 
         return $dataProvider;

@@ -42,7 +42,7 @@ class PositionSearch extends Position
         }
 
         if($this->name) {
-            $query->andFilterWhere( ['name' => $this->name] );
+            $query->andFilterWhere( ['like', 'name', $this->name] );
         }
 
         if($this->profession_id) {
