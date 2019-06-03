@@ -22,29 +22,19 @@ class m181024_102019_create_report extends Migration
         $this->createTable( '{{%report_group}}', [
             'report_group_id'    => $this->primaryKey(),
             'report_id'          => $this->integer(),
-            'report_position'    => $this->string(),
             'date_medical_check' => $this->string()
         ], $this->tableOptions );
 
         $this->createTable( '{{%report_group_employee}}', [
             'report_groups_employee_id' => $this->primaryKey(),
-            'report_id'                 => $this->integer(),
             'report_group_id'           => $this->integer(),
-            'employee_id'               => $this->integer()
+            'employee_id'               => $this->integer(),
+            'employee_index'            => $this->integer()
         ], $this->tableOptions );
 
         $this->addForeignKey(
             'fk-report_groups-report_id',
             'report_group',
-            'report_id',
-            'report',
-            'report_id',
-            'CASCADE'
-        );
-
-        $this->addForeignKey(
-            'fk-report_group_employee-report_id',
-            'report_group_employee',
             'report_id',
             'report',
             'report_id',

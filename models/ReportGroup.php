@@ -7,7 +7,6 @@ use yii\db\ActiveRecord;
 /**
  * @property $report_group_id      integer
  * @property $report_id            integer
- * @property $report_position      string
  * @property $date_medical_check   string
  */
 
