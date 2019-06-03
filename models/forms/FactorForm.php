@@ -28,7 +28,8 @@ class FactorForm extends Factor
     {
         return [
             [ ['factor_id'], 'integer' ],
-            [ ['name', 'code', 'analysis', 'doctor', 'periodicity'], 'required', 'message' => 'Обов\'язкове поле' ],
+            [ ['analysis', 'doctor', 'periodicity'], 'safe' ],
+            [ ['name', 'code'], 'required', 'message' => 'Обов\'язкове поле' ],
         ];
     }
 
