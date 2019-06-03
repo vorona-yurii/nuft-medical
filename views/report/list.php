@@ -76,27 +76,42 @@ $(\'body\').on(\'click\',\'a.del-report\',function(e){
                                                     "report/medical-examination-schedule/download",
                                                     'reportId' => $searchModel->report_id
                                                 ] ),
-                                                [ 'class' => 'btn btn-success' ] );
+                                                [
+                                                    'class' => 'btn btn-success',
+                                                    'target'=>'_blank',
+                                                    'data-pjax' => '0'
+                                                ] );
+
                                         $buttons .= Html::a(
                                             'Графік',
                                             Url::toRoute( [
                                                 "report/medical-examination-workers-list/download",
                                                 'reportId' => $searchModel->report_id
                                             ] ),
-                                            [ 'class' => 'btn btn-info'] );
+                                            [
+                                                'class' => 'btn btn-info',
+                                                'target'=>'_blank',
+                                                'data-pjax' => '0'
+                                            ] );
+
                                         $buttons .= Html::a(
                                                 'Акт',
                                                 Url::toRoute( [
                                                     "report/workers-categories-act/download",
                                                     'reportId' => $searchModel->report_id
                                                 ] ),
-                                                [ 'class' => 'btn btn-primary'] ) . '</div>';
+                                                [
+                                                    'class' => 'btn btn-primary',
+                                                    'target'=>'_blank',
+                                                    'data-pjax' => '0'
+                                                ] ) . '</div>';
 
                                         $buttons .= '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;';
 
                                         $buttons .= '<div class="btn-group">' . Html::a( '<i class="fa fa-pencil" aria-hidden="true"></i>',
                                                 Url::toRoute( [ "report/edit", 'id' => $searchModel->report_id ] ),
                                                 [ 'class' => 'btn btn-primary btn-edit-report' ] );
+
                                         $buttons .= Html::a( '<i class="fa fa-trash" aria-hidden="true"></i>',
                                                 Url::to( $searchModel->report_id ),
                                                 [ 'class' => 'btn btn-danger del-report'] ) . '</div>';
