@@ -424,12 +424,21 @@ class ReportController extends Controller
      */
     public function actionListChange($action, $id = 0 )
     {
-        if( !$model = ReportForm::findOne(['report_id' => $id]) ){
+        if( $model = ReportForm::findOne(['report_id' => $id]) ) {
+            $report_groups = ReportGroup::findAll(['report_id' => $id]);
+            foreach ($report_groups as $report_group) {
+                $model->report_group[] = [
+                    'date_medical_check' => $report_group->date_medical_check,
+                    'department'         => json_decode($report_group->report_group_department),
+                    'employee'           => json_decode($report_group->report_group_employee),
+                ];
+            }
+        } else {
             $model = new ReportForm();
         }
 
         if( method_exists($model, $action) ) {
-            if ( Yii::$app->request->isPost && $model->load( Yii::$app->request->post() ) ) {var_dump(Yii::$app->request->post());exit;
+            if ( Yii::$app->request->isPost && $model->load( Yii::$app->request->post() ) ) {
                 if ( $model->$action() ) {
                     Yii::$app->session->setFlash( 'success', 'Список успішно додано' );
                     return $this->redirect( [ 'report/list' ] );
@@ -458,7 +467,6 @@ class ReportController extends Controller
 
         if ( $report && Yii::$app->request->isAjax ) {
             ReportGroup::DeleteAll(['report_id' => $id ]);
-            ReportGroupEmployee::DeleteAll(['report_id' => $id ]);
             $report->delete();
 
             return true;

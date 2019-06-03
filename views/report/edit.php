@@ -15,6 +15,11 @@ $this->title = 'Додавання списку груп';
     }
 </style>
 
+<?php $form = ActiveForm::begin( [
+    'id'         => 'edit',
+    'options'    => [ 'enctype' => 'multipart/form-data' ],
+] ); ?>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
@@ -22,18 +27,6 @@ $this->title = 'Додавання списку груп';
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-sm-4">
                     <h2><?= $this->title; ?></h2>
-                </div>
-                <div class="col-sm-8">
-                    <div class="btn-save-wrapp">
-                        <div class="form-horizontal">
-                            <div class="form-group">
-                                <?php $form = ActiveForm::begin( [
-                                    'id'         => 'edit',
-                                    'options'    => [ 'enctype' => 'multipart/form-data' ],
-                                ] ); ?>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -75,7 +68,7 @@ $this->title = 'Додавання списку груп';
                                         ],
                                     ],
                                     [
-                                        'name'    => 'position',
+                                        'name'    => 'department',
                                         'type'    => \kartik\select2\Select2::className(),
                                         'title'   => 'Підрозділи',
                                         'options' => [
@@ -83,7 +76,7 @@ $this->title = 'Додавання списку груп';
                                                 'placeholder' => 'Виберіть підрозділи',
                                                 'multiple' => true
                                             ],
-                                            'data' => \app\models\Position::getAllPositions(),
+                                            'data' => \app\models\Department::getAllDepartments(),
                                         ],
                                     ],
                                     [
@@ -111,7 +104,6 @@ $this->title = 'Додавання списку груп';
                                 <div class="col-md-3 col-sm-6">
                                     <?= Html::submitButton( 'Зберегти',
                                         [ 'class' => 'btn btn-primary', 'name' => 'save-edit' ] ) ?>
-                                    <?php ActiveForm::end(); ?>
                                 </div>
                             </div>
                         </div>
@@ -122,3 +114,5 @@ $this->title = 'Додавання списку груп';
         </div>
     </div>
 </div>
+
+<?php ActiveForm::end(); ?>
