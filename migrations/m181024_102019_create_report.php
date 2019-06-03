@@ -20,16 +20,11 @@ class m181024_102019_create_report extends Migration
         ], $this->tableOptions );
 
         $this->createTable( '{{%report_group}}', [
-            'report_group_id'    => $this->primaryKey(),
-            'report_id'          => $this->integer(),
-            'date_medical_check' => $this->string()
-        ], $this->tableOptions );
-
-        $this->createTable( '{{%report_group_employee}}', [
-            'report_groups_employee_id' => $this->primaryKey(),
-            'report_group_id'           => $this->integer(),
-            'employee_id'               => $this->integer(),
-            'employee_index'            => $this->integer()
+            'report_group_id'         => $this->primaryKey(),
+            'report_id'               => $this->integer(),
+            'report_group_employee'   => $this->text(),
+            'report_group_department' => $this->text(),
+            'date_medical_check'      => $this->string()
         ], $this->tableOptions );
 
         $this->addForeignKey(
@@ -40,24 +35,6 @@ class m181024_102019_create_report extends Migration
             'report_id',
             'CASCADE'
         );
-
-        $this->addForeignKey(
-            'fk-report_group_employee-report_group_id',
-            'report_group_employee',
-            'report_group_id',
-            'report_group',
-            'report_group_id',
-            'CASCADE'
-        );
-
-        $this->addForeignKey(
-            'fk-report_group_employee-employee_id',
-            'report_group_employee',
-            'employee_id',
-            'employee',
-            'employee_id',
-            'CASCADE'
-        );
     }
 
     /**
@@ -65,7 +42,6 @@ class m181024_102019_create_report extends Migration
      */
     public function down()
     {
-        $this->dropTable( '{{%report_group_employee}}' );
         $this->dropTable( '{{%report_group}}' );
         $this->dropTable( '{{%report}}' );
     }
