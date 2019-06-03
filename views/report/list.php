@@ -73,27 +73,25 @@ $(\'body\').on(\'click\',\'a.del-report\',function(e){
                                         $buttons .= '<div class="btn-group">' . Html::a(
                                                 'Список',
                                                 Url::toRoute( [
+                                                    "report/medical-examination-workers-list/download",
+                                                    'reportId' => $searchModel->report_id
+                                                ] ),
+                                                [
+                                                    'class'     => 'btn btn-success',
+                                                    'target'    => '_blank',
+                                                    'data-pjax' => '0'
+                                                ] );
+                                        $buttons .= Html::a(
+                                                'Графік',
+                                                Url::toRoute( [
                                                     "report/medical-examination-schedule/download",
                                                     'reportId' => $searchModel->report_id
                                                 ] ),
                                                 [
-                                                    'class' => 'btn btn-success',
-                                                    'target'=>'_blank',
+                                                    'class'     => 'btn btn-info',
+                                                    'target'    => '_blank',
                                                     'data-pjax' => '0'
                                                 ] );
-
-                                        $buttons .= Html::a(
-                                            'Графік',
-                                            Url::toRoute( [
-                                                "report/medical-examination-workers-list/download",
-                                                'reportId' => $searchModel->report_id
-                                            ] ),
-                                            [
-                                                'class' => 'btn btn-info',
-                                                'target'=>'_blank',
-                                                'data-pjax' => '0'
-                                            ] );
-
                                         $buttons .= Html::a(
                                                 'Акт',
                                                 Url::toRoute( [

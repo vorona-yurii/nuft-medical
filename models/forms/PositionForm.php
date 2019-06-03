@@ -24,7 +24,7 @@ class PositionForm extends Position
             [ ['position_id', 'profession_id', 'department_id'], 'integer' ],
             [ ['name', 'additional_info'], 'string' ],
             [ ['factors'], 'safe' ],
-            [ ['name', 'profession_id', 'deparment_itd'], 'required', 'message' => 'Обов\'язкове поле' ],
+            [ ['name', 'profession_id', 'department_id'], 'required', 'message' => 'Обов\'язкове поле' ],
         ];
     }
 

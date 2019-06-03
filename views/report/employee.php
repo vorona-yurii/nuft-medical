@@ -5,6 +5,7 @@ use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use kartik\daterange\DateRangePicker;
 
 $this->title = 'Звіти - Працівники';
 
@@ -30,9 +31,22 @@ $this->title = 'Звіти - Працівники';
                             [
                                 'full_name:text:ПІБ',
                                 [
+                                    'label'     => 'Лікар',
+                                    'attribute' => 'doctor',
+                                    'format'    => 'raw',
+                                    'filter'    => \app\models\Doctor::getAllDoctors(),
+                                    'value'     => function( $searchModel ) {
+                                        $text = '';
+                                        foreach ( $searchModel->getPosition()->getDoctorsNames() as $doctorsName ) {
+                                            $text .= $doctorsName . "<br/>";
+                                        }
+                                        return $text;
+                                    }
+                                ],
+                                [
                                     'label'  => 'Звіти',
                                     'format' => 'raw',
-                                    'value'  => function ( $searchModel) {
+                                    'value'  => function ( $searchModel ) {
                                         $buttons = '';
 
                                         $buttons .= '<div class="btn-group">' . Html::a(
