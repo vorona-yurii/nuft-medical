@@ -44,7 +44,7 @@ class ProfessionForm extends Profession
 
         if( $this->save() ) {
             if( $this->analysis ) {
-                ProfessionAnalysis::deleteAll();
+                ProfessionAnalysis::deleteAll(['profession_id' => $this->profession_id]);
                 foreach ($this->analysis as $analysis) {
                     if($analysis = Analysis::findOne($analysis)) {
                         $professionAnalysis = new ProfessionAnalysis();
@@ -55,7 +55,7 @@ class ProfessionForm extends Profession
                 }
             }
             if( $this->doctor ) {
-                ProfessionDoctor::deleteAll();
+                ProfessionDoctor::deleteAll(['profession_id' => $this->profession_id]);
                 foreach ($this->doctor as $doctor) {
                     if($doctor = Doctor::findOne($doctor)) {
                         $professionDoctor = new ProfessionDoctor();

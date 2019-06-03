@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\forms\PositionForm;
 use app\models\Position;
+use app\models\PositionFactor;
 use app\models\search\PositionSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -108,6 +109,7 @@ class PositionController extends Controller
         if ( $position = Position::findOne($i) ) {
 
             if ( Yii::$app->request->isAjax && $position ) {
+                PositionFactor::deleteAll(['position_id' => $position->position_id]);
                 /** @var object $position */
                 $position->delete();
                 return true;

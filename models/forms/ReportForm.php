@@ -43,23 +43,14 @@ class ReportForm extends Report
         }
 
         if( $this->save() && $this->report_group ) {
-            ReportGroup::deleteAll();
+            ReportGroup::deleteAll(['report_id' => $this->report_id]);
             foreach ($this->report_group as $report_group) {
                 $reportGroup = new ReportGroup();
                 $reportGroup->report_id = $this->report_id;
+                $reportGroup->report_group_employee = json_encode($report_group['employee']);
+                $reportGroup->report_group_department = json_encode($report_group['department']);
                 $reportGroup->date_medical_check = $report_group['date_medical_check'];
-
-                if( $reportGroup_id = $reportGroup->save() && $report_group['employee'] ) {
-                    foreach ($report_group['employee'] as $report_group_employee) {
-                        if($report_group_employee =  Employee::findOne($report_group_employee) ) {
-                            $reportGroupEmployee = new ReportGroupEmployee();
-                            $reportGroupEmployee->report_group_id = $reportGroup->report_group_id;
-                            $reportGroupEmployee->employee_id = $report_group_employee->employee_id;
-                            $reportGroupEmployee->save();
-                        }
-                    }
-                }
-
+                $reportGroup->save();
             }
         }
 

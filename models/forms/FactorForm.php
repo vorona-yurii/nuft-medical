@@ -43,7 +43,7 @@ class FactorForm extends Factor
 
         if( $this->save() ) {
             if( $this->analysis ) {
-                FactorAnalysis::deleteAll();
+                FactorAnalysis::deleteAll(['factor_id' => $this->factor_id]);
                 foreach ($this->analysis as $analysis) {
                     if($analysis = Analysis::findOne($analysis)) {
                         $factorAnalysis = new FactorAnalysis();
@@ -54,7 +54,7 @@ class FactorForm extends Factor
                 }
             }
             if( $this->doctor ) {
-                FactorDoctor::deleteAll();
+                FactorDoctor::deleteAll(['factor_id' => $this->factor_id]);
                 foreach ($this->doctor as $doctor) {
                     if($doctor = Doctor::findOne($doctor)) {
                         $factorDoctor = new FactorDoctor();
