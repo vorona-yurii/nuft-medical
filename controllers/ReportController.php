@@ -275,19 +275,27 @@ class ReportController extends Controller
             return $this->reportCreationError();
         }
 
+        $employeesRows = [];
+        $employeesCounter = 0;
+        foreach ($groups as $group) {
+            foreach ($group['employees'] as $employee) {
+                $employeesCounter++;
+                list($position, $department, $profession) = $employee->getDependentData();
+
+                $employeesRows[] = [
+                    'examinationDate'   => $group['examinationDate'],
+                    'employeeNumber'    => $employeesCounter,
+                    'employeeListIndex' => $employee->getListIndex(),
+                    'employeeFullName'  => $employee->full_name,
+                    'depatmentName'     => $department->name,
+                ];
+            }
+        }
+
         $this->setTemplate('medical-examination-schedule.docx');
         $this->setAttachmentName('ГрафікМедогляду_'.$report->name);
 
-        $this->setDocumentValues([
-            'currentYear'            => date('Y'),
-            'employeeSecondName'     => 'Труш',
-            'employeeFirstName'      => 'Артем',
-            'employeeMiddleName'     => 'Юрійович',
-            'employeeBirthYear'      => '1998',
-            'employeeProfessionCode' => '00123',
-            'employeeProfessionName' => 'програмист',
-            'employeeFactors'        => 'кислота, луги',
-        ]);
+        $this->setDocumentTableRows($employeesRows);
 
         $this->createAndReturnDocument();
     }

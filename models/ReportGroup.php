@@ -25,7 +25,7 @@ class ReportGroup extends ActiveRecord
 
     public function getExaminationDate()
     {
-        return $this->$date_medical_check ? date('d.m', strtotime($this->$date_medical_check)) : '';
+        return $this->date_medical_check ? date('d.m', strtotime($this->date_medical_check)) : '';
     }
 
     public function getCollectedEmployees()

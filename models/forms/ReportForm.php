@@ -47,9 +47,9 @@ class ReportForm extends Report
             foreach ($this->report_group as $report_group) {
                 $reportGroup = new ReportGroup();
                 $reportGroup->report_id = $this->report_id;
-                $reportGroup->report_group_employee = json_encode($report_group['employee']);
-                $reportGroup->report_group_department = json_encode($report_group['department']);
-                $reportGroup->date_medical_check = $report_group['date_medical_check'];
+                $reportGroup->report_group_employee = json_encode($report_group['employee'] ?? '[]');
+                $reportGroup->report_group_department = json_encode($report_group['department'] ?? '[]');
+                $reportGroup->date_medical_check = $report_group['date_medical_check'] ?? '';
                 $reportGroup->save();
             }
         }
