@@ -28,7 +28,9 @@
         "imal-h/pdf-box": "^1.2",
         "kartik-v/yii2-widget-datetimepicker": "*",
         "kartik-v/yii2-widget-select2": "@dev",
-        "phpoffice/phpword": "^0.16.0"
+        "phpoffice/phpword": "^0.16.0",
+        "unclead/yii2-multiple-input": "~2.0",
+        "kartik-v/yii2-widget-datepicker": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

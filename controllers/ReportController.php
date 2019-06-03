@@ -2,6 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\forms\ReportForm;
+use app\models\ReportGroup;
+use app\models\ReportGroupEmployee;
+use app\models\search\ReportSearch;
+use Codeception\PHPUnit\ResultPrinter\Report;
 use PhpOffice\PhpWord\PhpWord;
 use app\models\Department;
 use app\models\Employee;
@@ -147,6 +152,7 @@ class ReportController extends Controller
                     [
                         'actions'      => [
                             'employee',
+                            'list', 'list-change', 'list-delete',
                             'employee-medical-card-download',
                             'employee-medical-referral-download',
                             'medical-examination-schedule-download',
@@ -397,5 +403,67 @@ class ReportController extends Controller
         $this->setDocumentTableRows($departmentsRows);
 
         $this->createAndReturnDocument();
+    }
+
+    /**
+     * @return string
+     */
+    public function actionList()
+    {
+        $searchModel = new ReportSearch();
+        $dataProvider = $searchModel->search( Yii::$app->request->queryParams );
+
+        return $this->render( 'list', compact('searchModel', 'dataProvider' ) );
+    }
+
+    /**
+     * @param $action
+     * @param int $id
+     *
+     * @return string|\yii\web\Response
+     */
+    public function actionListChange($action, $id = 0 )
+    {
+        if( !$model = ReportForm::findOne(['report_id' => $id]) ){
+            $model = new ReportForm();
+        }
+
+        if( method_exists($model, $action) ) {
+            if ( Yii::$app->request->isPost && $model->load( Yii::$app->request->post() ) ) {var_dump(Yii::$app->request->post());exit;
+                if ( $model->$action() ) {
+                    Yii::$app->session->setFlash( 'success', 'Список успішно додано' );
+                    return $this->redirect( [ 'report/list' ] );
+                } else {
+                    Yii::$app->session->setFlash( 'error', 'Помилка збереження' );
+                }
+            }
+
+            return $this->render( 'edit', compact( 'model', 'id' ) );
+        }
+
+        return $this->redirect( ['list'] );
+    }
+
+
+    /**
+     * @return bool
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionListDelete()
+    {
+        $id     = Yii::$app->request->post('id');
+        $report = \app\models\Report::findOne([$id]);
+
+        if ( $report && Yii::$app->request->isAjax ) {
+            ReportGroup::DeleteAll(['report_id' => $id ]);
+            ReportGroupEmployee::DeleteAll(['report_id' => $id ]);
+            $report->delete();
+
+            return true;
+        }
+
+        return false;
     }
 }

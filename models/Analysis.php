@@ -35,4 +35,9 @@ class Analysis extends ActiveRecord
         return $return;
     }
 
+//    public static function getAllAnalysis()
+//    {
+//        return \yii\helpers\ArrayHelper::map( self::find()->asArray()->all (),'analysis_id','name' );
+//    }
+
 }

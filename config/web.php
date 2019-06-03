@@ -123,11 +123,16 @@ $config = [
                 'periodicity/<action>'       => 'periodicity/change',
 
                  /***************** report ******************/
+                'report/employee'       => 'report/employee',
+                'report/list'           => 'report/list',
+                'report/delete'         => 'report/list-delete',
                 'report/employee-medical-card/download'     => 'report/employee-medical-card-download',
                 'report/employee-medical-referral/download' => 'report/employee-medical-referral-download',
                 'report/3'      => 'report/medical-examination-schedule-download',
                 'report/4'      => 'report/medical-examination-workers-list-download',
                 'report/5'      => 'report/workers-categories-act-download',
+                'report/<action>'       => 'report/list-change',
+                'report/<action>/<id>'  => 'report/list-change',
 
                 '<controller>/<action>'   => '<controller>/<action>',
             ],
