@@ -3,6 +3,9 @@
 namespace app\controllers;
 
 use app\models\Factor;
+use app\models\FactorAnalysis;
+use app\models\FactorDoctor;
+use app\models\FactorPeriodicity;
 use app\models\forms\FactorForm;
 use app\models\search\FactorSearch;
 use yii\filters\AccessControl;
@@ -108,6 +111,9 @@ class FactorController extends Controller
         if ( $factor = Factor::findOne($i) ) {
 
             if ( Yii::$app->request->isAjax && $factor ) {
+                FactorAnalysis::deleteAll(['factor_id' => $factor->factor_id]);
+                FactorDoctor::deleteAll(['factor_id' => $factor->factor_id]);
+                FactorPeriodicity::deleteAll(['factor_id' => $factor->factor_id]);
                 /** @var object $factor */
                 $factor->delete();
                 return true;

@@ -43,7 +43,7 @@ class ReportForm extends Report
         }
 
         if( $this->save() && $this->report_group ) {
-            ReportGroup::deleteAll();
+            ReportGroup::deleteAll(['report_id' => $this->report_id]);
             foreach ($this->report_group as $report_group) {
                 $reportGroup = new ReportGroup();
                 $reportGroup->report_id = $this->report_id;

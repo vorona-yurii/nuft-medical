@@ -6,7 +6,6 @@ use yii\db\ActiveRecord;
 
 /**
  * @property $employee_id                          integer
- * @property $department_id                        integer
  * @property $full_name                            string
  * @property $phone                                string
  * @property $email                                string

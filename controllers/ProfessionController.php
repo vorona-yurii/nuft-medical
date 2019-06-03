@@ -4,6 +4,9 @@ namespace app\controllers;
 
 use app\models\forms\ProfessionForm;
 use app\models\Profession;
+use app\models\ProfessionAnalysis;
+use app\models\ProfessionDoctor;
+use app\models\ProfessionPeriodicity;
 use app\models\search\ProfessionSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -108,6 +111,9 @@ class ProfessionController extends Controller
         if ( $profession = Profession::findOne($i) ) {
 
             if ( Yii::$app->request->isAjax && $profession ) {
+                ProfessionAnalysis::deleteAll(['profession_id' => $profession->profession_id]);
+                ProfessionDoctor::deleteAll(['profession_id' => $profession->profession_id]);
+                ProfessionPeriodicity::deleteAll(['profession_id' => $profession->profession_id]);
                 /** @var object $profession */
                 $profession->delete();
                 return true;

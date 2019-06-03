@@ -37,7 +37,7 @@ class PositionForm extends Position
         }
 
         if( $this->save() && $this->factors ) {
-            PositionFactor::deleteAll();
+            PositionFactor::deleteAll(['position_id' => $this->position_id]);
             foreach ($this->factors as $factor) {
                 if($factor = Factor::findOne($factor)) {
                     $positionFactor = new PositionFactor();

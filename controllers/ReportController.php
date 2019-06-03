@@ -466,7 +466,7 @@ class ReportController extends Controller
         $report = \app\models\Report::findOne([$id]);
 
         if ( $report && Yii::$app->request->isAjax ) {
-            ReportGroup::DeleteAll(['report_id' => $id ]);
+            ReportGroup::DeleteAll(['report_id' => $id]);
             $report->delete();
 
             return true;
