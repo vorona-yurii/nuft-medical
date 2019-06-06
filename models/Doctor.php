@@ -5,8 +5,9 @@ namespace app\models;
 use yii\db\ActiveRecord;
 
 /**
- * @property $doctor_id   integer
- * @property $name        string
+ * @property $doctor_id        integer
+ * @property $name             string
+ * @property $additional_info  text
  */
 
 class Doctor extends ActiveRecord

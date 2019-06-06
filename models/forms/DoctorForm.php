@@ -18,6 +18,7 @@ class DoctorForm extends Doctor
     {
         return [
             [ ['doctor_id'], 'integer' ],
+            [ ['additional_info'], 'string' ],
             [ ['name'], 'required', 'message' => 'Обов\'язкове поле' ],
         ];
     }
