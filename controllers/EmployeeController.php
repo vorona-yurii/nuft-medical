@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Employee;
 use app\models\forms\EmployeeForm;
+use app\models\forms\ImportForm;
 use app\models\search\EmployeeSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -39,7 +40,7 @@ class EmployeeController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions'      => [ 'list', 'change', 'delete' ],
+                        'actions'      => [ 'list', 'change', 'delete', 'import' ],
                         'allow'        => true,
                         'roles'        => [ '@' ],
                         'denyCallback' => function ( $rule, $action ) {
@@ -66,9 +67,38 @@ class EmployeeController extends Controller
     public function actionList()
     {
         $searchModel = new EmployeeSearch();
+        $importModel = new ImportForm();
         $dataProvider = $searchModel->search( Yii::$app->request->queryParams );
 
-        return $this->render(  'list', compact('searchModel', 'dataProvider') );
+        return $this->render(  'list', compact('searchModel', 'importModel', 'dataProvider') );
+    }
+
+    public function actionImport()
+    {
+        $importModel = new ImportForm();
+
+        $messages = null;
+        if (Yii::$app->request->isPost && $importModel->load( Yii::$app->request->post() )) {
+            $messages = $importModel->import();
+            if ($messages) {
+                $glue = '<br/>';
+                if ($messages['results']) {
+                    Yii::$app->session->setFlash( 'success', implode($glue, $messages['results']) );
+                }
+                if ($messages['errors']) {
+                    Yii::$app->session->setFlash( 'error', implode($glue, $messages['errors']) );
+                }
+                if ($messages['warnings']) {
+                    Yii::$app->session->setFlash( 'warning', implode($glue, $messages['warnings']) );
+                }
+            }
+        }
+
+        if (!$messages) {
+            Yii::$app->session->setFlash( 'error', 'Помилка імпорту' );
+        }
+
+        return $this->redirect( [ 'employee/list' ] );
     }
 
     /**

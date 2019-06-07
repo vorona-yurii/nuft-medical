@@ -8,6 +8,7 @@ return [
     'employee'                => 'employee/list',
     'employee/list'           => 'employee/list',
     'employee/delete'         => 'employee/delete',
+    'employee/import'         => 'employee/import',
     'employee/<action>/<id>'  => 'employee/change',
     'employee/<action>'       => 'employee/change',
 

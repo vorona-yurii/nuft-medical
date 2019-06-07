@@ -5,6 +5,7 @@ use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 $this->title = 'Працівники - Список';
 
@@ -34,6 +35,16 @@ $(\'body\').on(\'click\',\'a.del-employee\',function(e){
     }
 
 });
+
+$(\'body\').on(\'click\',\'.submit-csv-file-btn\', function(e) {
+    e.preventDefault();
+    $(\'.upload-csv-file-btn\').val(\'\').trigger(\'click\');
+});
+
+$(\'body\').on(\'change\',\'.upload-csv-file-btn\', function(e) {
+    $(\'form#import-csv-form\').submit();
+});
+
 ');
 
 ?>
@@ -47,6 +58,24 @@ $(\'body\').on(\'click\',\'a.del-employee\',function(e){
                 </div>
                 <div class="col-sm-8">
                     <div class="title-action">
+                        <?php $form = ActiveForm::begin([
+                            'id' => 'import-csv-form',
+                            'action' => 'employee/import',
+                            'options' => ['enctype' => 'multipart/form-data']]
+                        ) ?>
+                            <?= $form->field($importModel, 'csvFile')->fileInput([
+                                'accept' => '.csv',
+                                'class'  => 'upload-csv-file-btn',
+                                'style'  => 'display:none;',
+                            ])->label(false); ?>
+                            <div class="btn-group pull-right" style="margin-left: 20px;">
+                                <?= Html::submitButton(
+                                    'Імпорт працівників',
+                                    [ 'class' => 'btn btn-primary submit-csv-file-btn' ]
+                                ) ?>
+                            </div>
+                        <?php ActiveForm::end() ?>
+
                         <div class="btn-group pull-right">
                             <a href="<?=Url::toRoute('employee/add')?>" class="btn btn-primary dim" type="button"><i class="fa fa-plus"></i> Додати працівника</a>
                         </div>
