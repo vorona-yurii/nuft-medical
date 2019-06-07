@@ -46,6 +46,10 @@ $this->title = ($id ? 'Редагування' : 'Додавання' ). ' лі�
                                 <?= $form->field( $model, 'name', ['options' => ['class' => 'col-xs-12 col-lg-12']])
                                     ->label( 'Назва лікаря' )->textInput(); ?>
                             </div>
+                            <div class="row">
+                                <?= $form->field( $model, 'additional_info', ['options' => ['class' => 'col-xs-12 col-lg-12']])
+                                    ->label( 'Додаткова інформація ' )->textarea(['rows' => 5]); ?>
+                            </div>
                         </div>
                     </div>
                 </div>
