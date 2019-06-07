@@ -110,6 +110,11 @@ class Position extends ActiveRecord
         return $this->objects_column($this->getCombinedDoctors(), 'name');
     }
 
+    public function getDoctorsHints()
+    {
+        return array_filter($this->objects_column($this->getCombinedDoctors(), 'additional_info'));
+    }
+
     public function getAnalyzesNames()
     {
         return $this->objects_column($this->getCombinedAnalyzes(), 'name');

@@ -259,6 +259,7 @@ class ReportController extends Controller
             'employeeProfessionCode' => $profession->code,
             'employeeProfessionName' => $profession->name,
             'employeeFactors'        => implode(', ', $position->getFactorsCombinedNames()),
+            'employeeHint'           => implode($this->getTemplateLineBreak(), $position->getDoctorsHints()),
         ]);
 
         $this->createAndReturnDocument();
