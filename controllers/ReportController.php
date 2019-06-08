@@ -30,6 +30,8 @@ class ReportController extends Controller
     private $documentTableRows = [];
     private $documentBlocks = [];
 
+    private $documentSaveOnlyMode = false;
+
     private $attachmentName = 'Report.docx';
 
     protected function setTemplate($template)
@@ -52,6 +54,11 @@ class ReportController extends Controller
         $this->documentBlocks = $blocks;
     }
 
+    protected function setDocumentSaveOnlyMode($mode = false)
+    {
+        $this->documentSaveOnlyMode = $mode;
+    }
+
     protected function setAttachmentName($attachmentName, $attachmentExtension = 'docx')
     {
         $this->attachmentName = $attachmentName.'.'.$attachmentExtension;
@@ -61,7 +68,7 @@ class ReportController extends Controller
     {
         $this->initDocument();
         $this->fillDocument();
-        $this->returnDocumentForDownload();
+        return $this->returnDocumentForDownload();
     }
 
     private function initDocument()
@@ -120,11 +127,18 @@ class ReportController extends Controller
     {
         $attachment = $this->document->save();
         if (file_exists($attachment)) {
-            Yii::$app->response->sendFile($attachment, $this->attachmentName);
-            unlink($attachment);
+            if ($this->documentSaveOnlyMode) {
+                return $attachment;
+            } else {
+                Yii::$app->response->sendFile($attachment, $this->attachmentName);
+                unlink($attachment);
+                return true;
+            }
         } else {
             $this->reportCreationError();
         }
+
+        return false;
     }
 
     /**
@@ -254,7 +268,7 @@ class ReportController extends Controller
             'doctorBlock' => $doctorsRows,
         ]);
 
-        $this->createAndReturnDocument();
+        return $this->createAndReturnDocument();
     }
 
     public function actionEmployeeMedicalReferralDownload($employeeId)
@@ -281,7 +295,7 @@ class ReportController extends Controller
             'employeeHint'           => implode($this->getTemplateLineBreak(), $position->getDoctorsHints()),
         ]);
 
-        $this->createAndReturnDocument();
+        return $this->createAndReturnDocument();
     }
 
     public function actionMedicalExaminationScheduleDownload($reportId)
@@ -318,7 +332,7 @@ class ReportController extends Controller
 
         $this->setDocumentTableRows($employeesRows);
 
-        $this->createAndReturnDocument();
+        return $this->createAndReturnDocument();
     }
 
     public function actionMedicalExaminationWorkersListDownload($reportId)
@@ -362,7 +376,7 @@ class ReportController extends Controller
 
         $this->setDocumentTableRows($employeesRows);
 
-        $this->createAndReturnDocument();
+        return $this->createAndReturnDocument();
     }
 
     public function actionWorkersCategoriesActDownload($reportId)
@@ -448,7 +462,7 @@ class ReportController extends Controller
 
         $this->setDocumentTableRows($departmentsRows);
 
-        $this->createAndReturnDocument();
+        return $this->createAndReturnDocument();
     }
 
     /**
