@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\forms\ReportForm;
+use app\models\service\Notification;
 use app\models\ReportGroup;
 use app\models\ReportGroupEmployee;
 use app\models\search\ReportEmployeeSearch;
@@ -154,7 +155,7 @@ class ReportController extends Controller
                     [
                         'actions'      => [
                             'employee',
-                            'list', 'list-change', 'list-delete',
+                            'list', 'list-change', 'list-delete', 'notify',
                             'employee-medical-card-download',
                             'employee-medical-referral-download',
                             'medical-examination-schedule-download',
@@ -190,6 +191,24 @@ class ReportController extends Controller
         $dataProvider = $searchModel->search( Yii::$app->request->queryParams );
 
         return $this->render('employee', compact('searchModel', 'dataProvider'));
+    }
+
+    /**
+     * @param $report_id
+     * @return \yii\web\Response
+     */
+    public function actionNotify( $report_id )
+    {
+        $mailer = Notification::sendMail( $report_id );
+
+        if( $mailer['success'] ) {
+            Yii::$app->session->setFlash( 'success', 'Повідомлення про медогляд успішно відправлено ' . $mailer['count'] . ' працівникам(у)' );
+        }
+        if ( $mailer['error'] ) {
+            Yii::$app->session->setFlash( 'error', 'Помилка відправки повідомлень' );
+        }
+
+        return $this->redirect( [ 'report/list' ] );
     }
 
     public function actionEmployeeMedicalCardDownload($employeeId)

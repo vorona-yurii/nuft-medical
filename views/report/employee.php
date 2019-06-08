@@ -30,19 +30,19 @@ $this->title = 'Звіти - Працівники';
                         'columns'      =>
                             [
                                 'full_name:text:ПІБ',
-                                [
-                                    'label'     => 'Лікар',
-                                    'attribute' => 'doctor',
-                                    'format'    => 'raw',
-                                    'filter'    => \app\models\Doctor::getAllDoctors(),
-                                    'value'     => function( $searchModel ) {
-                                        $text = '';
-                                        foreach ( $searchModel->getPosition()->getDoctorsNames() as $doctorsName ) {
-                                            $text .= $doctorsName . "<br/>";
-                                        }
-                                        return $text;
-                                    }
-                                ],
+//                                 [
+//                                    'label'     => 'Лікар',
+//                                    'attribute' => 'doctor',
+//                                    'format'    => 'raw',
+//                                    'filter'    => \app\models\Doctor::getAllDoctors(),
+//                                    'value'     => function( $searchModel ) {
+//                                        $text = '';
+//                                        foreach ( $searchModel->getPosition()->getDoctorsNames() as $doctorsName ) {
+//                                            $text .= $doctorsName . "<br/>";
+//                                        }
+//                                        return $text;
+//                                    }
+//                                ],
                                 [
                                     'label'  => 'Звіти',
                                     'format' => 'raw',

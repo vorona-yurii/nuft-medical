@@ -125,6 +125,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                         </a>
                         <ul class="dropdown-menu dropdown-messages">
                             <li>
+                                <a class="btn btn-link" href="<?= Url::to(['/setting']); ?>"><i class="fa fa-cog" aria-hidden="true"></i> Налаштування</a>
+                            </li>
+                            <li>
                                 <?= Html::beginForm( [ '/logout' ], 'post' )
                                 . Html::submitButton( '<i class="fa fa-sign-out"></i> Вихід',
                                     [ 'class' => 'btn btn-link logout' ] ) . Html::endForm() ?>

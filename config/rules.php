@@ -65,6 +65,7 @@ return [
     'report/employee'       => 'report/employee',
     'report/list'           => 'report/list',
     'report/delete'         => 'report/list-delete',
+    'report/notify/<report_id>' => 'report/notify',
     'report/employee-medical-card/download'            => 'report/employee-medical-card-download',
     'report/employee-medical-referral/download'        => 'report/employee-medical-referral-download',
     'report/medical-examination-schedule/download'     => 'report/medical-examination-schedule-download',

@@ -65,7 +65,7 @@ $(\'body\').on(\'click\',\'a.del-report\',function(e){
                             [
                                 'name:text:Назва',
                                 [
-                                    'label'  => 'Звіти | Дії',
+                                    'label'  => 'Звіти',
                                     'format' => 'raw',
                                     'value'  => function ( $searchModel) {
                                         $buttons = '';
@@ -104,7 +104,33 @@ $(\'body\').on(\'click\',\'a.del-report\',function(e){
                                                     'data-pjax' => '0'
                                                 ] ) . '</div>';
 
-                                        $buttons .= '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;';
+                                        return $buttons;
+                                    },
+                                    'contentOptions' => function () {
+                                        return ['style' => 'text-align: center;'];
+                                    },
+                                ],
+                                [
+                                    'label'  => 'Повідомлення',
+                                    'format' => 'raw',
+                                    'value'  => function ( $searchModel) {
+                                        $buttons = '';
+
+                                        $buttons .= '<div class="btn-group">' . Html::a( '<i class="fa fa-bell" aria-hidden="true"></i> Відправити на пошту',
+                                                Url::toRoute( [ "report/notify", 'report_id' => $searchModel->report_id ] ),
+                                                [ 'class' => 'btn btn-primary' ] );
+
+                                        return $buttons;
+                                    },
+                                    'contentOptions' => function () {
+                                        return ['style' => 'text-align: center;'];
+                                    },
+                                ],
+                                [
+                                    'label'  => 'Дії',
+                                    'format' => 'raw',
+                                    'value'  => function ( $searchModel) {
+                                        $buttons = '';
 
                                         $buttons .= '<div class="btn-group">' . Html::a( '<i class="fa fa-pencil" aria-hidden="true"></i>',
                                                 Url::toRoute( [ "report/edit", 'id' => $searchModel->report_id ] ),
