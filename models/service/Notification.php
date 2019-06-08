@@ -114,9 +114,10 @@ class Notification extends Model
                                 ->setSubject( 'Повідомлення щодо проходження медогляду' )
                                 ->setTextBody( $mail );
 
-//                if( Setting::getSetting('enable_email_file') ) {
-//                    $message->attach( \Yii::$app->runAction('report/employee-medical-referral-download', ['employeeId' => $employee->employee_id]) );
-//                }
+                if( Setting::getSetting('enable_email_file') ) {
+                    $tmp = \Yii::$app->runAction('report/employee-medical-referral-download', ['employeeId' => $employee->employee_id, 'get_path' => true]);
+                    $message->attachContent(file_get_contents($tmp),  ['fileName' => 'Направлення.docx']);
+                }
 
                 $messages[] = $message;
             }

@@ -271,11 +271,15 @@ class ReportController extends Controller
         return $this->createAndReturnDocument();
     }
 
-    public function actionEmployeeMedicalReferralDownload($employeeId)
+    public function actionEmployeeMedicalReferralDownload($employeeId, $get_path = false)
     {
         $employee = Employee::findOne($employeeId);
         if (!$employee) {
             return $this->reportCreationError();
+        }
+
+        if( $get_path ) {
+            $this->setDocumentSaveOnlyMode(true);
         }
 
         list($position, $department, $profession) = $employee->getDependentData();
