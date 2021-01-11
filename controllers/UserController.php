@@ -50,11 +50,11 @@ class UserController extends Controller
         $this->layout = '@app/views/layouts/login.php';
 
         $model = new LoginForm();
-        if ( $model->load( Yii::$app->request->post() ) && $model->login() ) {
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->redirect(['/user']);
         }
 
-        return $this->render( 'login', compact('model') );
+        return $this->render('login', compact('model'));
     }
 
     /**
