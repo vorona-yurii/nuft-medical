@@ -105,10 +105,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                 'options' => [ 'class' => 'nav', 'id' => 'side-menu' ],
             ] );
             ?>
-
         </div>
     </nav>
-
 
     <div id="page-wrapper" class="gray-bg dashbard-1 clearfix">
         <div class="row border-bottom">

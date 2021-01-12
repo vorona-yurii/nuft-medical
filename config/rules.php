@@ -74,5 +74,7 @@ return [
     'report/<action>'       => 'report/list-change',
     'report/<action>/<id>'  => 'report/list-change',
 
+    'survey/<token>' => 'survey/index',
+
     '<controller>/<action>'   => '<controller>/<action>',
 ];
