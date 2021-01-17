@@ -1,0 +1,228 @@
+.quiz-container {
+    padding-top: 40px;
+}
+
+.quiz-container form {
+    width: 100%;
+}
+
+.quiz-container .panel {
+    border-color: #2f4050 !important;
+}
+.quiz-container .panel-heading {
+    border-color: #2f4050 !important;
+    background-color: #2f4050 !important;
+}
+
+.quiz-container .btn-primary {
+    border-color: #2f4050 !important;
+    background-color: #2f4050 !important;
+    outline: none !important;
+}
+
+.quiz-container .btn-success {
+    border-color: #1ab394 !important;
+    background-color: #1ab394 !important;
+    outline: none !important;
+    color: white !important;
+}
+
+.quiz-container .btn-danger {
+    border-color: #ed5565 !important;
+    background-color: #ed5565 !important;
+    outline: none !important;
+    color: white !important;
+}
+
+.quiz-container .quiz-next-btn,
+.quiz-container .quiz-prev-btn {
+    width: 150px;
+}
+
+.quiz-container .quiz-prev-btn {
+    margin-right: 10px;
+}
+
+.quiz-container .quiz-submit-btn {
+    width: 100%;
+}
+
+.quiz-body form {
+    display: flex;
+    align-items: stretch;
+}
+
+.quiz-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-left: 30px !important;
+    border-left: 2px solid #2f4050;
+}
+
+.quiz-sidebar > div:nth-child(n+2) {
+    border-top: 2px solid #2f4050;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.quiz-question {
+    display: none;
+    padding-right: 15px;
+    font-size: 18px;
+}
+
+.quiz-map-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    width: 100%;
+}
+
+.quiz-map-btn {
+    border-radius: 50%;
+    border: 2px solid #2f4050;
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-bottom: 12px;
+
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz-map-btn.completed {
+    background-color: #1ab394;
+    color: white;
+}
+
+.quiz-map-btn.active {
+    color: white;
+    background-color: #2f4050;
+}
+
+.quiz-timer-label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 40px;
+}
+
+.confirm-modal-buttons-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.confirm-modal-message {
+    font-weight: bold;
+}
+
+.confirm-modal-buttons-box button {
+    width: 150px;
+}
+
+.answer-checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px !important;
+    margin-bottom: 15px !important;
+    cursor: pointer;
+    user-select: none;
+}
+.answer-checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.answer-checkbox-container .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border: 2px solid #2f4050;
+}
+.answer-checkbox-container:hover input ~ .checkmark {
+    background-color: lightgrey;
+}
+.answer-checkbox-container input:checked ~ .checkmark {
+    background-color: #2f4050;
+}
+.answer-checkbox-container .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.answer-checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+.answer-checkbox-container .checkmark:after {
+    left: 8px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+.answer-radio-container {
+    display: block;
+    position: relative;
+    padding-left: 35px !important;
+    margin-bottom: 15px !important;
+    cursor: pointer;
+    user-select: none;
+}
+.answer-radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.answer-radio-container .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    border: 2px solid #2f4050;
+}
+.answer-radio-container:hover input ~ .checkmark {
+    background-color: lightgrey;
+}
+.answer-radio-container input:checked ~ .checkmark {
+    background-color: #2f4050;
+}
+.answer-radio-container .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.answer-radio-container input:checked ~ .checkmark:after {
+    display: block;
+}
+.answer-radio-container .checkmark:after {
+    top: 7px;
+    left: 7px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: white;
+}
