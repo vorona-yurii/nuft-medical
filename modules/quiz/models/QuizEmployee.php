@@ -64,10 +64,10 @@ class QuizEmployee extends \yii\db\ActiveRecord
     {
         return [
             'quiz_employee_id' => 'ID опитування працівника',
-            'employee_id' => 'ID працівника',
+            'employee_id' => 'Працівник',
             'quiz_id' => 'ID опитування',
-            'token' => 'Токен',
-            'passed' => 'Пройшов',
+            'token' => 'Посилання',
+            'passed' => 'Пройшов опитування',
             'start_date' => 'Час початку',
             'end_date' => 'Час закінчення',
             'score' => 'Рахунок',
@@ -96,5 +96,17 @@ class QuizEmployee extends \yii\db\ActiveRecord
     public function getQuizEmployeeAnswers()
     {
         return $this->hasMany(QuizEmployeeAnswer::className(), ['quiz_employee_id' => 'quiz_employee_id']);
+    }
+
+    public static function addEmployee($employee_id, $quiz_id)
+    {
+        if (!$quiz_employee = QuizEmployee::findOne(['quiz_id' => $quiz_id, 'employee_id' => $employee_id])) {
+            $quiz_employee = new QuizEmployee();
+            $quiz_employee->quiz_id = $quiz_id;
+            $quiz_employee->employee_id = $employee_id;
+            $quiz_employee->token = Yii::$app->security->generateRandomString(12);
+            $quiz_employee->save();
+        }
+        return $quiz_employee;
     }
 }

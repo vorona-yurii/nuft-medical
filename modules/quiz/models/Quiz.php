@@ -18,7 +18,6 @@ use Yii;
  */
 class Quiz extends \yii\db\ActiveRecord
 {
-    public $employees;
     public $questions;
 
     /**
@@ -49,7 +48,7 @@ class Quiz extends \yii\db\ActiveRecord
         return [
             [['description'], 'string'],
             [['description', 'duration', 'name'], 'required'],
-            [['employees', 'questions'], 'safe'],
+            [['questions'], 'safe'],
             [['duration'], 'compare', 'compareValue' => 1, 'operator' => '>=', 'type' => 'number'],
             [['name'], 'string', 'max' => 255],
         ];

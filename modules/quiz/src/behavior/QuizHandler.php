@@ -3,12 +3,9 @@
 namespace app\modules\quiz\src\behavior;
 
 use app\modules\quiz\models\QuizAnswer;
-use app\modules\quiz\models\QuizEmployee;
 use app\modules\quiz\models\QuizQuestion;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
-use yii\helpers\ArrayHelper;
-use Yii;
 
 class QuizHandler extends Behavior
 {
@@ -23,7 +20,6 @@ class QuizHandler extends Behavior
 
     public function find()
     {
-        $this->owner->employees = !$this->owner->isNewRecord ? ArrayHelper::getColumn($this->owner->quizEmployees, 'employee_id') : [];
         if (!$this->owner->isNewRecord && $this->owner->quizQuestions) {
             foreach ($this->owner->quizQuestions as $question) {
                 $quiz_question = [
@@ -46,30 +42,7 @@ class QuizHandler extends Behavior
 
     public function after()
     {
-        $this->employees();
         $this->questions();
-    }
-
-    private function employees()
-    {
-        $employees = [];
-        if ($this->owner->employees) {
-            foreach ($this->owner->employees as $employee_id) {
-                if (!$quiz_employee = QuizEmployee::findOne(['quiz_id' => $this->owner->quiz_id, 'employee_id' => $employee_id])) {
-                    $quiz_employee = new QuizEmployee();
-                    $quiz_employee->quiz_id = $this->owner->quiz_id;
-                    $quiz_employee->employee_id = $employee_id;
-                    $quiz_employee->token = Yii::$app->security->generateRandomString(12);
-                    $quiz_employee->save();
-                }
-                $employees[] = $quiz_employee->employee_id;
-            }
-        }
-        QuizEmployee::deleteAll([
-            'and',
-            ['not', ['in', 'employee_id', $employees]],
-            ['quiz_id' => $this->owner->quiz_id]
-        ]);
     }
 
     private function questions()

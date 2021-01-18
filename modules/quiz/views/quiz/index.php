@@ -49,8 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 [
                                     'class' => 'yii\grid\ActionColumn',
-                                    'template' => '{update} {delete}',
-                                    'headerOptions' => ['width' => '105'],
+                                    'template' => '{update} {delete} {employees}',
+                                    'headerOptions' => ['width' => '200'],
                                     'buttons' => [
                                         'update' => function ($url, $model, $key) {
                                             return Html::a('<i class="fa fa-pencil"></i>', ['/quiz/quiz/update', 'id' => $key],
@@ -69,6 +69,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'data-confirm' => 'Ви впевнені, що хочете видалити це опитування?'
                                                 ]);
                                         },
+                                        'employees' => function ($url, $model, $key) {
+                                            return Html::a('Відправити працівникам', ['/quiz/quiz-employee/index', 'quiz_id' => $key],
+                                                [
+                                                    'class' => 'btn btn-primary',
+                                                    'title' => 'Працівники',
+                                                    'data-pjax' => '0',
+                                                ]);
+                                        }
                                     ],
                                 ],
                             ],

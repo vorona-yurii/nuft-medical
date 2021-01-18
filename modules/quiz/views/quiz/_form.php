@@ -2,10 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\Employee;
-use yii\helpers\ArrayHelper;
 use unclead\multipleinput\MultipleInput;
-use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\quiz\models\Quiz */
@@ -73,19 +70,6 @@ use kartik\select2\Select2;
             ],
         ]
     ])->label(false); ?>
-
-
-    <hr>
-    <p><b>Відправити працівникам</b></p>
-    <?= $form->field($model, 'employees')->widget(Select2::className(),
-        [
-            'data' => ArrayHelper::map(Employee::find()->all(), 'employee_id', 'full_name'),
-            'options' => [
-                'placeholder' => 'Виберіть працівників',
-                'multiple' => true
-            ],
-        ])->label(false);
-    ?>
 
     <br>
     <div class="form-group">
