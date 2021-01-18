@@ -49,12 +49,12 @@ class QuizQuestion extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'quiz_question_id' => 'Quiz Question ID',
-            'quiz_id' => 'Quiz ID',
-            'type' => 'Type',
-            'content' => 'Content',
-            'explanation' => 'Explanation',
-            'references' => 'References',
+            'quiz_question_id' => 'ID питання',
+            'quiz_id' => 'ID опитування',
+            'type' => 'Тип питання',
+            'content' => 'Контент',
+            'explanation' => 'Пояснення',
+            'references' => 'Додаткові дані',
         ];
     }
 

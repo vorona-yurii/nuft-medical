@@ -17,7 +17,7 @@ use app\widgets\PidDetected;
 use yii\helpers\Url;
 use app\models\User;
 
-InnerAsset::register( $this );
+InnerAsset::register($this);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favicon.ico']);
 ?>
 <?php $this->beginPage() ?>
@@ -28,7 +28,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode( $this->title ) ?></title>
+    <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -39,15 +39,16 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <?php
-            $class_organization = in_array($this->context->route, ['employee/list', 'department/list', 'profession/list', 'position/list' ]) ? 'active' : '';
-            $class_other        = in_array($this->context->route, ['factor/list', 'doctor/list', 'analysis/list', 'periodicity/list']) ? 'active' : '';
-            $class_report       = in_array($this->context->route, ['report/employee', 'report/list']) ? 'active' : '';
-            echo Nav::widget( [
+            $class_organization = in_array($this->context->route, ['employee/list', 'department/list', 'profession/list', 'position/list']) ? 'active' : '';
+            $class_other = in_array($this->context->route, ['factor/list', 'doctor/list', 'analysis/list', 'periodicity/list']) ? 'active' : '';
+            $class_report = in_array($this->context->route, ['report/employee', 'report/list']) ? 'active' : '';
+            $class_quiz = in_array($this->context->route, ['quiz/quiz/index', 'quiz/quiz/create', 'quiz/quiz/update']) ? 'active' : '';
+            echo Nav::widget([
                 'encodeLabels' => false,
-                'items'        => [
+                'items' => [
                     '<li class="nav-header">
                         <div class="dropdown profile-element text-center"> 
-                             <img alt="image" class="img-circle" src="' . Url::to( '@web/images/nuft-logo.png' ) . '">
+                             <img alt="image" class="img-circle" src="' . Url::to('@web/images/nuft-logo.png') . '">
                              <span class="block m-t-xs">
                                 <strong>Система контролю медогляду НУХТ</strong>
                              </span>
@@ -60,15 +61,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                             <span class="nav-label">Організація</span> 
                             <span class="caret"></span>
                         </a>' .
-                    Nav::widget( [
-                        'items'   => [
-                            [ 'label' => 'Працівники', 'url' => [ "employee/list" ] ],
-                            [ 'label' => 'Структурні підрозділи', 'url' => [ "department/list" ] ],
-                            [ 'label' => 'Загальні професії', 'url' =>  [ "profession/list" ] ],
-                            [ 'label' => 'Посади підрозділів', 'url' =>  [ "position/list" ] ],
+                    Nav::widget([
+                        'items' => [
+                            ['label' => 'Працівники', 'url' => ["/employee/list"]],
+                            ['label' => 'Структурні підрозділи', 'url' => ["/department/list"]],
+                            ['label' => 'Загальні професії', 'url' => ["/profession/list"]],
+                            ['label' => 'Посади підрозділів', 'url' => ["/position/list"]],
                         ],
-                        'options' => [ 'class' => 'nav nav-second-level collapse' ],
-                    ] )
+                        'options' => ['class' => 'nav nav-second-level collapse'],
+                    ])
                     . '</li>',
                     '<li class="' . $class_other . '">
                         <a>
@@ -76,15 +77,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                             <span class="nav-label">Додаткові дані</span> 
                             <span class="caret"></span>
                         </a>' .
-                    Nav::widget( [
-                        'items'   => [
-                            [ 'label' => 'Шкідливі фактори', 'url' => [ "factor/list" ] ],
-                            [ 'label' => 'Лікарі', 'url' => [ "doctor/list" ] ],
-                            [ 'label' => 'Аналізи', 'url' => [ "analysis/list" ] ],
-                            [ 'label' => 'Періодичність', 'url' => [ "periodicity/list" ] ],
+                    Nav::widget([
+                        'items' => [
+                            ['label' => 'Шкідливі фактори', 'url' => ["/factor/list"]],
+                            ['label' => 'Лікарі', 'url' => ["/doctor/list"]],
+                            ['label' => 'Аналізи', 'url' => ["/analysis/list"]],
+                            ['label' => 'Періодичність', 'url' => ["/periodicity/list"]],
                         ],
-                        'options' => [ 'class' => 'nav nav-second-level collapse' ],
-                    ] )
+                        'options' => ['class' => 'nav nav-second-level collapse'],
+                    ])
                     . '</li>',
                     '<li class="' . $class_report . '">
                         <a>
@@ -92,18 +93,24 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                             <span class="nav-label">Звіти</span> 
                             <span class="caret"></span>
                         </a>' .
-                    Nav::widget( [
-                        'items'   => [
-                            [ 'label' => 'Працівники', 'url' => [ "report/employee" ] ],
-                            [ 'label' => 'Списки', 'url' => [ "report/list" ] ],
+                    Nav::widget([
+                        'items' => [
+                            ['label' => 'Працівники', 'url' => ["/report/employee"]],
+                            ['label' => 'Списки', 'url' => ["/report/list"]],
                         ],
-                        'options' => [ 'class' => 'nav nav-second-level collapse' ],
-                    ] )
+                        'options' => ['class' => 'nav nav-second-level collapse'],
+                    ])
                     . '</li>',
+                    '<li class="' . $class_quiz . '">
+                        <a href="' . Url::to(['/quiz/quiz/index']) . '"> 
+                            <i class="fa fa-bar-chart"></i>
+                            <span class="nav-label">Опитування</span>
+                        </a>
+                    </li>',
                 ],
 
-                'options' => [ 'class' => 'nav', 'id' => 'side-menu' ],
-            ] );
+                'options' => ['class' => 'nav', 'id' => 'side-menu'],
+            ]);
             ?>
         </div>
     </nav>
@@ -118,17 +125,19 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                 <ul class="nav navbar-top-links navbar-right text-right">
                     <li class="dropdown">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="false">
-                            <strong class="font-bold"><?= Yii::$app->user->identity->email ; ?></strong>
+                            <strong class="font-bold"><?= Yii::$app->user->identity->email; ?></strong>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-messages">
                             <li>
-                                <a class="btn btn-link" href="<?= Url::to(['/setting']); ?>"><i class="fa fa-cog" aria-hidden="true"></i> Налаштування</a>
+                                <a class="btn btn-link" href="<?= Url::to(['/setting']); ?>"><i class="fa fa-cog"
+                                                                                                aria-hidden="true"></i>
+                                    Налаштування</a>
                             </li>
                             <li>
-                                <?= Html::beginForm( [ '/logout' ], 'post' )
-                                . Html::submitButton( '<i class="fa fa-sign-out"></i> Вихід',
-                                    [ 'class' => 'btn btn-link logout' ] ) . Html::endForm() ?>
+                                <?= Html::beginForm(['/logout'], 'post')
+                                . Html::submitButton('<i class="fa fa-sign-out"></i> Вихід',
+                                    ['class' => 'btn btn-link logout']) . Html::endForm() ?>
                             </li>
                         </ul>
                     </li>

@@ -42,9 +42,9 @@ class QuizEmployeeAnswer extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'quiz_employee_answer_id' => 'Quiz Employee Answer ID',
-            'quiz_employee_id' => 'Quiz Employee ID',
-            'quiz_answer_id' => 'Quiz Answer ID',
+            'quiz_employee_answer_id' => 'ID відповіді працівника',
+            'quiz_employee_id' => 'ID працівника',
+            'quiz_answer_id' => 'ID відповіді',
         ];
     }
 
