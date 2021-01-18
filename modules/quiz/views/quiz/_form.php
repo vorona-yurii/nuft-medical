@@ -43,7 +43,7 @@ use kartik\select2\Select2;
             [
                 'name' => 'references',
                 'type' => 'textarea',
-                'title' => 'Рекомендації',
+                'title' => 'Ресурси',
                 'enableError' => true,
             ],
             [

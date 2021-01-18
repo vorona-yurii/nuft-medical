@@ -54,7 +54,7 @@ class QuizQuestion extends \yii\db\ActiveRecord
             'type' => 'Тип питання',
             'content' => 'Контент',
             'explanation' => 'Пояснення',
-            'references' => 'Додаткові дані',
+            'references' => 'Ресурси',
         ];
     }
 
