@@ -20,7 +20,7 @@ class SurveyController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'except' => ['index'],
+                'except' => ['index', 'start', 'finish'],
                 'rules' => [
                     [
                         'allow' => true,

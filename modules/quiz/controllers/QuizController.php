@@ -14,6 +14,8 @@ use yii\filters\VerbFilter;
  */
 class QuizController extends Controller
 {
+    public $layout = 'inner';
+
     /**
      * {@inheritdoc}
      */
@@ -67,7 +69,7 @@ class QuizController extends Controller
         $model = new Quiz();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->quiz_id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -87,7 +89,7 @@ class QuizController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->quiz_id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -122,6 +124,6 @@ class QuizController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Опитування не знайдено');
     }
 }

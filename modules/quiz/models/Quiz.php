@@ -2,6 +2,7 @@
 
 namespace app\modules\quiz\models;
 
+use app\modules\quiz\src\behavior\QuizHandler;
 use Yii;
 
 /**
@@ -17,6 +18,8 @@ use Yii;
  */
 class Quiz extends \yii\db\ActiveRecord
 {
+    public $questions;
+
     /**
      * {@inheritdoc}
      */
@@ -26,13 +29,27 @@ class Quiz extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => QuizHandler::className(),
+            ],
+        ];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
             [['description'], 'string'],
-            [['duration'], 'integer'],
+            [['description', 'duration', 'name'], 'required'],
+            [['questions'], 'safe'],
+            [['duration'], 'compare', 'compareValue' => 1, 'operator' => '>=', 'type' => 'number'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -43,10 +60,10 @@ class Quiz extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'quiz_id' => 'Quiz ID',
-            'name' => 'Name',
-            'description' => 'Description',
-            'duration' => 'Duration',
+            'quiz_id' => 'ID опитування',
+            'name' => 'Назва',
+            'description' => 'Опис',
+            'duration' => 'Тривалість (хв)',
         ];
     }
 

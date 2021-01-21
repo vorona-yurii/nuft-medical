@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\modules\quiz\models\Quiz */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Quizzes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Опитування', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="quiz-view">
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->quiz_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->quiz_id], [
+        <?= Html::a('Редагувати', ['update', 'id' => $model->quiz_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Видалити', ['delete', 'id' => $model->quiz_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Ви впевнені, що хочете видалити данне опитування?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'quiz_id',
             'name',
             'description:ntext',
             'duration',

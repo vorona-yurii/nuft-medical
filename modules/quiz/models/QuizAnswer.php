@@ -43,10 +43,10 @@ class QuizAnswer extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'quiz_answer_id' => 'Quiz Answer ID',
-            'quiz_question_id' => 'Quiz Question ID',
-            'content' => 'Content',
-            'correct' => 'Correct',
+            'quiz_answer_id' => 'ID відповіді',
+            'quiz_question_id' => 'ID питання',
+            'content' => 'Контент',
+            'correct' => 'Вірно',
         ];
     }
 

@@ -3,6 +3,7 @@
 namespace app\modules\quiz\models;
 
 use app\models\Employee;
+use app\modules\quiz\src\behavior\QuizEmployeeHandler;
 use Yii;
 
 /**
@@ -32,6 +33,18 @@ class QuizEmployee extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => QuizEmployeeHandler::className(),
+            ],
+        ];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
@@ -50,14 +63,14 @@ class QuizEmployee extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'quiz_employee_id' => 'Quiz Employee ID',
-            'employee_id' => 'Employee ID',
-            'quiz_id' => 'Quiz ID',
-            'token' => 'Token',
-            'passed' => 'Passed',
-            'start_date' => 'Start Date',
-            'end_date' => 'End Date',
-            'score' => 'Score',
+            'quiz_employee_id' => 'ID опитування працівника',
+            'employee_id' => 'Працівник',
+            'quiz_id' => 'ID опитування',
+            'token' => 'Посилання',
+            'passed' => 'Пройшов опитування',
+            'start_date' => 'Час початку',
+            'end_date' => 'Час закінчення',
+            'score' => 'Рахунок',
         ];
     }
 
@@ -83,5 +96,17 @@ class QuizEmployee extends \yii\db\ActiveRecord
     public function getQuizEmployeeAnswers()
     {
         return $this->hasMany(QuizEmployeeAnswer::className(), ['quiz_employee_id' => 'quiz_employee_id']);
+    }
+
+    public static function addEmployee($employee_id, $quiz_id)
+    {
+        if (!$quiz_employee = QuizEmployee::findOne(['quiz_id' => $quiz_id, 'employee_id' => $employee_id])) {
+            $quiz_employee = new QuizEmployee();
+            $quiz_employee->quiz_id = $quiz_id;
+            $quiz_employee->employee_id = $employee_id;
+            $quiz_employee->token = Yii::$app->security->generateRandomString(12);
+            $quiz_employee->save();
+        }
+        return $quiz_employee;
     }
 }

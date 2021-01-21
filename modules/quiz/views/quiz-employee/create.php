@@ -3,12 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\quiz\models\Quiz */
+/* @var $model app\modules\quiz\models\QuizEmployee */
 
-$this->title = 'Редагування опитування: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Опитування', 'url' => ['index']];
+$this->title = 'Відправити опитування працівникам';
+$this->params['breadcrumbs'][] = ['label' => 'Працівники', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
