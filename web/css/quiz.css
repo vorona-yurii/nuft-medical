@@ -34,6 +34,14 @@
     color: white !important;
 }
 
+.quiz-container .bg-success {
+    background-color: #1ab394 !important;
+}
+
+.quiz-container .bg-danger {
+    background-color: #ed5565 !important;
+}
+
 .quiz-container .quiz-next-btn,
 .quiz-container .quiz-prev-btn {
     width: 150px;
@@ -61,6 +69,7 @@
 }
 
 .quiz-sidebar > div:nth-child(n+2) {
+    display: none;
     border-top: 2px solid #2f4050;
     margin-top: 20px;
     padding-top: 20px;
@@ -131,6 +140,12 @@
 
 .confirm-modal-buttons-box button {
     width: 150px;
+}
+
+.answer-content {
+    display: inline-block;
+    padding: 0 5px;
+    border-radius: 5px;
 }
 
 .answer-checkbox-container {

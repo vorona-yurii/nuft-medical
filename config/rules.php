@@ -77,6 +77,7 @@ return [
     'survey/<token>' => 'survey/index',
     'survey/<token>/start' => 'survey/start',
     'survey/<token>/finish' => 'survey/finish',
+    'survey/<token>/explanation' => 'survey/explanation',
 
     '<controller>/<action>'   => '<controller>/<action>',
 ];

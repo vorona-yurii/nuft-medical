@@ -8,11 +8,21 @@ use yii\helpers\ArrayHelper;
 $quiz = $quiz_employee->quiz;
 $employee = $quiz_employee->employee;
 
+$employee_selected_answers_ids = [];
+if ($is_explanation_page) {
+    foreach ($quiz_employee->quizEmployeeAnswers as $employee_answer) {
+        $employee_selected_answers_ids[] = $employee_answer->quiz_answer_id;
+    }
+}
+
 $shuffled_questions = [];
 foreach ($quiz->quizQuestions as $quiz_question) {
     $answers = [];
     foreach ($quiz_question->quizAnswers as $quiz_answer) {
-        $answers[] = (object) ArrayHelper::toArray($quiz_answer);
+        $answer = (object) ArrayHelper::toArray($quiz_answer);
+        $answer->selected = in_array($answer->quiz_answer_id, $employee_selected_answers_ids);
+
+        $answers[] = $answer;
     }
     shuffle($answers);
 
@@ -27,7 +37,7 @@ $this->title = $quiz->name;
 
 $this->registerCssFile('/css/quiz.css');
 
-$register_navigation = $is_process_page;
+$register_navigation = $is_process_page || $is_explanation_page;
 $register_timer = $is_process_page;
 $register_answer_inputs = $is_process_page;
 
@@ -131,6 +141,9 @@ if ($register_timer) {
         $(".quiz-confirm-submit-btn").click(() => {
             $("form#process").submit();
         });
+
+        $(".quiz-timer-box").show();
+        $(".quiz-submit-box").show();
     ');
 }
 
@@ -203,7 +216,7 @@ if ($register_answer_inputs) {
                 <?php ActiveForm::end(); ?>
             <?php endif; ?>
 
-            <?php if ($is_process_page): ?>
+            <?php if ($is_process_page || $is_explanation_page): ?>
                 <?php
                     $form = ActiveForm::begin([
                         'id' => 'process',
@@ -218,11 +231,13 @@ if ($register_answer_inputs) {
                             <p class="text-justify"><?= $question->content ?></p>
                             <br>
 
-                            <?php if ($question->type === 'simple'): ?>
-                                <span class="text-muted">Оберіть одну правильну відповідь:</span>
-                            <?php endif; ?>
-                            <?php if ($question->type === 'multiple'): ?>
-                                <span class="text-muted">Оберіть одну або декілька правильних відповідей:</span>
+                            <?php if ($is_process_page): ?>
+                                <?php if ($question->type === 'simple'): ?>
+                                    <span class="text-muted">Оберіть одну правильну відповідь:</span>
+                                <?php endif; ?>
+                                <?php if ($question->type === 'multiple'): ?>
+                                    <span class="text-muted">Оберіть одну або декілька правильних відповідей:</span>
+                                <?php endif; ?>
                             <?php endif; ?>
 
                             <?php foreach ($question->shuffled_answers as $answer): ?>
@@ -230,6 +245,20 @@ if ($register_answer_inputs) {
                                     $answer_input_name = (
                                         "questions[$answer->quiz_question_id][answers][$answer->quiz_answer_id]"
                                     );
+
+                                    $answer_content_class = '';
+                                    $answer_checked_attr = '';
+                                    if ($is_explanation_page) {
+                                        if ($answer->selected) {
+                                            $answer_checked_attr = 'checked';
+                                        }
+
+                                        if ($answer->correct) {
+                                            $answer_content_class = 'bg-success';
+                                        } elseif ($answer->selected) {
+                                            $answer_content_class = 'bg-danger';
+                                        }
+                                    }
                                 ?>
                                 <?php if ($question->type === 'simple'): ?>
                                     <div class="radio">
@@ -238,9 +267,12 @@ if ($register_answer_inputs) {
                                                 class="answer-input answer-radio"
                                                 type="radio"
                                                 name="<?= $answer_input_name ?>"
+                                                <?= $answer_checked_attr ?>
                                             >
                                             <span class="checkmark"></span>
-                                            <?= $answer->content ?>
+                                            <span class="answer-content <?= $answer_content_class ?>">
+                                                <?= $answer->content ?>
+                                            </span>
                                         </label>
                                     </div>
                                 <?php endif; ?>
@@ -251,13 +283,22 @@ if ($register_answer_inputs) {
                                                 class="answer-input answer-checkbox"
                                                 type="checkbox"
                                                 name="<?= $answer_input_name ?>"
+                                                <?= $answer_checked_attr ?>
                                             >
                                             <span class="checkmark"></span>
-                                            <?= $answer->content ?>
+                                            <span class="answer-content <?= $answer_content_class ?>">
+                                                <?= $answer->content ?>
+                                            </span>
                                         </label>
                                     </div>
                                 <?php endif; ?>
                             <?php endforeach; ?>
+
+                            <?php if ($is_explanation_page && $question->explanation): ?>
+                                <br>
+                                <span class="text-muted">Пояснення:</span>
+                                <p class="text-justify"><?= $question->explanation ?></p>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
 
@@ -275,10 +316,10 @@ if ($register_answer_inputs) {
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <div>
+                    <div class="quiz-timer-box">
                         <span class="quiz-timer-label"></span>
                     </div>
-                    <div class="text-center">
+                    <div class="quiz-submit-box text-center">
                         <button
                             type="button"
                             class="quiz-submit-btn btn btn-lg btn-success"

@@ -31,6 +31,20 @@ class SurveyController extends Controller
         ];
     }
 
+    private function renderQuizPage($params)
+    {
+        $params += [
+            'token' => null,
+            'quiz_employee' => null,
+            'is_start_page' => false,
+            'is_process_page' => false,
+            'is_finish_page' => false,
+            'is_explanation_page' => false,
+        ];
+
+        return $this->render('index', $params);
+    }
+
     public function actionIndex($token = '')
     {
         $quiz_employee = QuizEmployee::findOne(['token' => $token]);
@@ -41,17 +55,39 @@ class SurveyController extends Controller
             ]);
         }
 
-        $is_start_page = !$quiz_employee->start_date;
-        $is_process_page = $quiz_employee->start_date && !$quiz_employee->end_date;
-        $is_finish_page = !$is_start_page && !$is_process_page;
-
-        return $this->render('index', [
+        $params = [
             'token' => $token,
-            'is_start_page' => $is_start_page,
-            'is_process_page' => $is_process_page,
-            'is_finish_page' => $is_finish_page,
             'quiz_employee' => $quiz_employee,
-        ]);
+        ];
+
+        if (!$quiz_employee->start_date) {
+            $params['is_start_page'] = true;
+        } elseif ($quiz_employee->start_date && !$quiz_employee->end_date) {
+            $params['is_process_page'] = true;
+        } else {
+            $params['is_finish_page'] = true;
+        }
+
+        return $this->renderQuizPage($params);
+    }
+
+    public function actionExplanation($token = '')
+    {
+        $quiz_employee = QuizEmployee::findOne(['token' => $token]);
+
+        if (!$quiz_employee) {
+            return $this->render('error', [
+                'error' => 'Опитування не знайдено!',
+            ]);
+        }
+
+        $params = [
+            'token' => $token,
+            'quiz_employee' => $quiz_employee,
+            'is_explanation_page' => true,
+        ];
+
+        return $this->renderQuizPage($params);
     }
 
     public function actionStart($token = '')
