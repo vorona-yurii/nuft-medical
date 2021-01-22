@@ -20,7 +20,9 @@ class m210111_235009_create_table_quiz_employee extends Migration
             'passed' => $this->boolean()->notNull()->defaultValue(0),
             'start_date' => $this->integer(),
             'end_date' => $this->integer(),
-            'score' => $this->integer()
+            'score' => $this->integer()->notNull()->defaultValue(0),
+            'current_level' => $this->integer()->notNull()->defaultValue(1),
+            'show_explanation' => $this->boolean()->notNull()->defaultValue(0)
         ], $this->tableOptions);
 
         $this->addForeignKey(

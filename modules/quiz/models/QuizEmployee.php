@@ -17,6 +17,8 @@ use Yii;
  * @property int $start_date
  * @property int $end_date
  * @property int $score
+ * @property int $current_level
+ * @property int $show_explanation
  *
  * @property Employee $employee
  * @property Quiz $quiz
@@ -50,7 +52,7 @@ class QuizEmployee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['employee_id', 'quiz_id', 'passed', 'start_date', 'end_date', 'score'], 'integer'],
+            [['employee_id', 'quiz_id', 'passed', 'start_date', 'end_date', 'score', 'current_level', 'show_explanation'], 'integer'],
             [['token'], 'string', 'max' => 255],
             [['employee_id'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['employee_id' => 'employee_id']],
             [['quiz_id'], 'exist', 'skipOnError' => true, 'targetClass' => Quiz::className(), 'targetAttribute' => ['quiz_id' => 'quiz_id']],
@@ -71,6 +73,8 @@ class QuizEmployee extends \yii\db\ActiveRecord
             'start_date' => 'Час початку',
             'end_date' => 'Час закінчення',
             'score' => 'Рахунок',
+            'current_level' => 'Рівень',
+            'show_explanation' => 'Показувати пояснення'
         ];
     }
 

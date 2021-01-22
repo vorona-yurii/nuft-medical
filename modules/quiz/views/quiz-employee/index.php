@@ -74,7 +74,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'filter' => false,
                                     'format' => 'raw',
                                     'value' => function ($data) {
-                                        return '<a data-pjax="0" target="_blank" href="' . Url::to(['/survey/index', 'token' => $data->token]) . '">Перейти</a>';
+                                        $links = '<a data-pjax="0" target="_blank" href="' . Url::to(['/survey/index', 'token' => $data->token]) . '">Опитування</a>';
+                                        if ($data->passed) {
+                                            $links .= ' / <a data-pjax="0" target="_blank" href="' . Url::to(['/survey/explanation', 'token' => $data->token]) . '">Відповіді</a>';
+                                        }
+                                        return $links;
                                     }
                                 ],
                                 [
