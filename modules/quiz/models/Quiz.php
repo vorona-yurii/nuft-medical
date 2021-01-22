@@ -14,11 +14,11 @@ use Yii;
  * @property int $duration
  *
  * @property QuizEmployee[] $quizEmployees
- * @property QuizQuestion[] $quizQuestions
+ * @property QuizSubjectMap[] $quizSubjectMaps
  */
 class Quiz extends \yii\db\ActiveRecord
 {
-    public $questions;
+    public $subjects;
 
     /**
      * {@inheritdoc}
@@ -48,7 +48,7 @@ class Quiz extends \yii\db\ActiveRecord
         return [
             [['description'], 'string'],
             [['description', 'duration', 'name'], 'required'],
-            [['questions'], 'safe'],
+            [['subjects'], 'safe'],
             [['duration'], 'compare', 'compareValue' => 1, 'operator' => '>=', 'type' => 'number'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -64,6 +64,7 @@ class Quiz extends \yii\db\ActiveRecord
             'name' => 'Назва',
             'description' => 'Опис',
             'duration' => 'Тривалість (хв)',
+            'subjects' => 'Теми'
         ];
     }
 
@@ -78,8 +79,8 @@ class Quiz extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getQuizQuestions()
+    public function getQuizSubjectMaps()
     {
-        return $this->hasMany(QuizQuestion::className(), ['quiz_id' => 'quiz_id']);
+        return $this->hasMany(QuizSubjectMap::className(), ['quiz_id' => 'quiz_id']);
     }
 }

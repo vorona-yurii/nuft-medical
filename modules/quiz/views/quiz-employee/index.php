@@ -14,7 +14,7 @@ use app\models\Employee;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $quiz_id integer */
 
-$this->title = 'Працівники';
+$this->title = 'Працівники | Опитування #' . $quiz_id;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">

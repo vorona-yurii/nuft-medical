@@ -14,19 +14,21 @@ class m210111_235007_create_table_quiz_question extends Migration
     {
         $this->createTable('{{%quiz_question}}', [
             'quiz_question_id' => $this->primaryKey(),
-            'quiz_id' => $this->integer(),
+            'quiz_subject_id' => $this->integer(),
+            'level' => $this->integer(),
             'type' => "ENUM('simple', 'multiple')",
+            'image' => $this->text(),
             'content' => $this->text(),
             'explanation' => $this->text(),
             'references' => $this->json()
         ], $this->tableOptions);
 
         $this->addForeignKey(
-            'fk-quiz_question-quiz_id',
+            'fk-quiz_question-quiz_subject_id',
             'quiz_question',
-            'quiz_id',
-            'quiz',
-            'quiz_id',
+            'quiz_subject_id',
+            'quiz_subject',
+            'quiz_subject_id',
             'CASCADE',
             'CASCADE'
         );

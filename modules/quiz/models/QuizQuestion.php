@@ -2,25 +2,31 @@
 
 namespace app\modules\quiz\models;
 
+use app\modules\quiz\src\behavior\QuizQuestionHandler;
 use Yii;
 
 /**
  * This is the model class for table "quiz_question".
  *
  * @property int $quiz_question_id
- * @property int $quiz_id
+ * @property int $quiz_subject_id
+ * @property int $level
  * @property string $type
+ * @property string $image
  * @property string $content
  * @property string $explanation
  * @property array $references
  *
  * @property QuizAnswer[] $quizAnswers
- * @property Quiz $quiz
+ * @property QuizSubject $quizSubject
  */
 class QuizQuestion extends \yii\db\ActiveRecord
 {
     const TYPE_SIMPLE = 'simple';
     const TYPE_MULTIPLE = 'multiple';
+
+    public $media;
+    public $answers;
 
     /**
      * {@inheritdoc}
@@ -31,15 +37,29 @@ class QuizQuestion extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => QuizQuestionHandler::className(),
+            ],
+        ];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['quiz_id'], 'integer'],
+            [['quiz_subject_id', 'level'], 'integer'],
             [['type', 'content', 'explanation'], 'string'],
-            [['references'], 'safe'],
-            [['quiz_id'], 'exist', 'skipOnError' => true, 'targetClass' => Quiz::className(), 'targetAttribute' => ['quiz_id' => 'quiz_id']],
+            [['level', 'quiz_subject_id', 'content', 'explanation'], 'required'],
+            [['references', 'image', 'answers'], 'safe'],
+            [['quiz_subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => QuizSubject::className(), 'targetAttribute' => ['quiz_subject_id' => 'quiz_subject_id']],
+            [['media'], 'file', 'skipOnEmpty' => true, 'maxSize' => 1024 * 1024 * 3, 'extensions' => 'png, jpg, jpeg, gif'],
         ];
     }
 
@@ -50,11 +70,15 @@ class QuizQuestion extends \yii\db\ActiveRecord
     {
         return [
             'quiz_question_id' => 'ID питання',
-            'quiz_id' => 'ID опитування',
+            'quiz_subject_id' => 'Тема опитування',
+            'level' => 'Рівень',
             'type' => 'Тип питання',
-            'content' => 'Контент',
+            'image' => 'Картинка',
+            'media' => 'Картинка',
+            'content' => 'Текст питання',
             'explanation' => 'Пояснення',
             'references' => 'Ресурси',
+            'answers' => 'Відповіді'
         ];
     }
 
@@ -69,8 +93,8 @@ class QuizQuestion extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getQuiz()
+    public function getQuizSubject()
     {
-        return $this->hasOne(Quiz::className(), ['quiz_id' => 'quiz_id']);
+        return $this->hasOne(QuizSubject::className(), ['quiz_subject_id' => 'quiz_subject_id']);
     }
 }

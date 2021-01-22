@@ -2,7 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use unclead\multipleinput\MultipleInput;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use app\modules\quiz\models\QuizSubject;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\quiz\models\Quiz */
@@ -16,60 +18,15 @@ use unclead\multipleinput\MultipleInput;
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'duration')->textInput(['type' => 'number']) ?>
 
-    <hr>
-    <p><b>Питання опитування</b></p>
-    <?= $form->field($model, 'questions')->widget(MultipleInput::className(), [
-        'min' => 0,
-        'max' => 20,
-        'iconSource' => 'fa',
-        'columns' => [
-            [
-                'name' => 'content',
-                'title' => 'Питання',
-                'enableError' => true,
-                'options' => [
-                    'class' => 'input-priority'
-                ]
+    <?= $form->field($model, 'subjects')->widget(Select2::className(),
+        [
+            'data' => ArrayHelper::map(QuizSubject::find()->all(), 'quiz_subject_id', 'name'),
+            'options' => [
+                'placeholder' => 'Виберіть теми',
+                'multiple' => true
             ],
-            [
-                'name' => 'explanation',
-                'type' => 'textarea',
-                'title' => 'Пояснення',
-                'enableError' => true,
-            ],
-            [
-                'name' => 'references',
-                'type' => 'textarea',
-                'title' => 'Ресурси',
-                'enableError' => true,
-            ],
-            [
-                'name' => 'answers',
-                'type' => MultipleInput::className(),
-                'title' => 'Відповіді',
-                'options' => [
-                    'min' => 0,
-                    'max' => 5,
-                    'columns' => [
-                        [
-                            'name' => 'content',
-                            'title' => 'Назва',
-                            'enableError' => true,
-                            'options' => [
-                                'class' => 'input-priority'
-                            ]
-                        ],
-                        [
-                            'name' => 'correct',
-                            'title' => 'Вірна',
-                            'type' => 'checkbox',
-                            'enableError' => true,
-                        ],
-                    ]
-                ]
-            ],
-        ]
-    ])->label(false); ?>
+        ])
+    ?>
 
     <br>
     <div class="form-group">
