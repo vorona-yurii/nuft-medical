@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 [
                                     'class' => 'yii\grid\ActionColumn',
-                                    'template' => '{delete}',
+                                    'template' => '{delete} {send_answers}',
                                     'headerOptions' => ['width' => '100'],
                                     'buttons' => [
                                         'delete' => function ($url, $model, $key) {
@@ -99,6 +99,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'data-pjax' => '0',
                                                     'data-confirm' => 'Ви впевнені, що хочете видалити праівника з опитування?'
                                                 ]);
+                                        },
+                                        'send_answers' => function ($url, $model, $key) {
+                                            return $model->passed ? Html::a('<i class="fa fa-paper-plane"></i>', ['/quiz/quiz-employee/send-answers', 'id' => $key],
+                                                [
+                                                    'title' => 'Відправити відповіді по e-mail',
+                                                    'class' => 'btn btn-primary'
+                                                ]) : '';
                                         },
                                     ],
                                 ],
