@@ -8,31 +8,6 @@ use yii\helpers\ArrayHelper;
 $quiz = $quiz_employee->quiz;
 $employee = $quiz_employee->employee;
 
-$employee_selected_answers_ids = [];
-if ($is_explanation_page) {
-    foreach ($quiz_employee->quizEmployeeAnswers as $employee_answer) {
-        $employee_selected_answers_ids[] = $employee_answer->quiz_answer_id;
-    }
-}
-
-$shuffled_questions = [];
-foreach ($quiz->quizQuestions as $quiz_question) {
-    $answers = [];
-    foreach ($quiz_question->quizAnswers as $quiz_answer) {
-        $answer = (object) ArrayHelper::toArray($quiz_answer);
-        $answer->selected = in_array($answer->quiz_answer_id, $employee_selected_answers_ids);
-
-        $answers[] = $answer;
-    }
-    shuffle($answers);
-
-    $quiz_question = (object) ArrayHelper::toArray($quiz_question);
-    $quiz_question->shuffled_answers = $answers;
-
-    $shuffled_questions[] = $quiz_question;
-}
-shuffle($shuffled_questions);
-
 $this->title = $quiz->name;
 
 $this->registerCssFile('/css/quiz.css');
@@ -180,6 +155,14 @@ if ($register_answer_inputs) {
             <div class="col-md-12 text-center">
                 <h2><?= $this->title ?></h2>
                 <h3><?= $employee->full_name ?></h3>
+
+                <?php
+                    $levels_names = [
+                        1 => 'початковий',
+                        2 => 'достатній',
+                        3 => 'високий',
+                    ];
+                ?>
             </div>
         </div>
         <div class="quiz-body row panel-body">
@@ -226,8 +209,14 @@ if ($register_answer_inputs) {
                 ?>
 
                 <div class="col-md-8">
-                    <?php foreach ($shuffled_questions as $idx => $question): ?>
+                    <?php foreach ($questions as $idx => $question): ?>
                         <div class="quiz-question" data-idx="<?= $idx ?>">
+                            <?php if ($question->image): ?>
+                                <div class="question-image">
+                                    <img src="/<?= Url::to($question->image); ?>">
+                                </div>
+                            <?php endif; ?>
+
                             <p class="text-justify"><?= $question->content ?></p>
                             <br>
 
@@ -240,7 +229,7 @@ if ($register_answer_inputs) {
                                 <?php endif; ?>
                             <?php endif; ?>
 
-                            <?php foreach ($question->shuffled_answers as $answer): ?>
+                            <?php foreach ($question->answers as $answer): ?>
                                 <?php
                                     $answer_input_name = (
                                         "questions[$answer->quiz_question_id][answers][$answer->quiz_answer_id]"
@@ -310,8 +299,15 @@ if ($register_answer_inputs) {
                 </div>
                 <div class="quiz-sidebar col-md-4">
                     <div class="quiz-map-box">
-                        <?php foreach ($shuffled_questions as $idx => $question): ?>
-                            <div class="quiz-map-btn" data-idx="<?= $idx ?>">
+                        <?php foreach ($questions as $idx => $question): ?>
+                            <?php
+                                $correct_class = '';
+                                if ($is_explanation_page) {
+                                    $correct_class = $question->correct ? 'correct' : 'incorrect';
+                                }
+                            ?>
+
+                            <div class="quiz-map-btn <?= $correct_class ?>" data-idx="<?= $idx ?>">
                                 <?= $idx + 1 ?>
                             </div>
                         <?php endforeach; ?>
@@ -325,7 +321,13 @@ if ($register_answer_inputs) {
                             class="quiz-submit-btn btn btn-lg btn-success"
                             data-toggle="modal"
                             data-target="#confirm-finish-modal"
-                        >Завершити</button>
+                        >
+                        <?php if ($current_level < $max_level): ?>
+                            Перейти до наступного рівня питань
+                        <?php else: ?>
+                            Завершити
+                        <?php endif; ?>
+                        </button>
                     </div>
                 </div>
 
@@ -336,7 +338,13 @@ if ($register_answer_inputs) {
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body text-center">
-                                <h4 class="confirm-modal-message">Ви дійсно бажаєте завершити опитування?</h4>
+                                <h4 class="confirm-modal-message">
+                                <?php if ($current_level < $max_level): ?>
+                                    Ви дійсно бажаєте перейти до наступного рівня питань?
+                                <?php else: ?>
+                                    Ви дійсно бажаєте завершити опитування?
+                                <?php endif; ?>
+                                </h4>
                             </div>
                             <div class="modal-footer confirm-modal-buttons-box">
                                 <button

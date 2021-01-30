@@ -53,6 +53,7 @@
 
 .quiz-container .quiz-submit-btn {
     width: 100%;
+    white-space: normal;
 }
 
 .quiz-body form {
@@ -79,6 +80,21 @@
     display: none;
     padding-right: 15px;
     font-size: 18px;
+}
+
+.question-image {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: 25px;
+    padding-top: 10px;
+}
+
+.question-image img {
+    max-height: 300px;
+    width: auto;
+    border-radius: 10px;
 }
 
 .quiz-map-box {
@@ -114,7 +130,14 @@
     background-color: #1ab394;
     color: white;
 }
-
+.quiz-map-btn.incorrect {
+    background-color: #ed5565;
+    color: white;
+}
+.quiz-map-btn.correct {
+    background-color: #1ab394;
+    color: white;
+}
 .quiz-map-btn.active {
     color: white;
     background-color: #2f4050;
