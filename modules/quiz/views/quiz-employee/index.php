@@ -27,7 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-8">
                     <div class="title-action">
                         <div class="btn-group pull-right">
-                            <a href="<?= Url::to(['/quiz/quiz-employee/join', 'quiz_id' => $quiz_id]) ?>" class="btn btn-primary dim" type="button">
+                            <a href="<?= Url::to(['/quiz/quiz-employee/join', 'quiz_id' => $quiz_id]) ?>"
+                               class="btn btn-primary dim" type="button">
                                 <i class="fa fa-plus"></i> Вибрати працівників</a>
                         </div>
                     </div>
@@ -66,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'attribute' => 'passed',
                                     'filter' => [1 => 'Так', 0 => 'Ні'],
                                     'value' => function ($data) {
-                                        return $data->passed ? 'Так': 'Ні';
+                                        return $data->passed ? 'Так' : 'Ні';
                                     }
                                 ],
                                 [
@@ -104,13 +105,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                             return $model->passed ? Html::a('<i class="fa fa-paper-plane"></i>', ['/quiz/quiz-employee/send-answers', 'id' => $key],
                                                 [
                                                     'title' => 'Відправити відповіді по e-mail',
-                                                    'class' => 'btn btn-primary'
+                                                    'class' => 'btn btn-primary',
+                                                    'data-method' => 'post',
+                                                    'data-pjax' => '0',
                                                 ]) : '';
                                         },
                                     ],
                                 ],
                             ],
-
                     ]) ?>
                     <?= LinkPager::widget(['pagination' => $dataProvider->pagination]); ?>
 

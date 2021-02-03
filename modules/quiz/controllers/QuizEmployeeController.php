@@ -27,6 +27,7 @@ class QuizEmployeeController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'send-answers' => ['POST']
                 ],
             ],
         ];
@@ -59,6 +60,20 @@ class QuizEmployeeController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function actionSendAnswers($id)
+    {
+        $employee = $this->findModel($id);
+        $employee->show_explanation = 1;
+        $employee->save();
+
+        $employee->sendAnswersToEmployee();
+        $quiz_id = $employee->quiz_id;
+
+        Yii::$app->session->setFlash('success', 'Відповіді успішно відправлені працівнику');
+
+        return $this->redirect(['index', 'quiz_id' => $quiz_id]);
     }
 
     /**

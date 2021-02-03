@@ -5,6 +5,7 @@ namespace app\modules\quiz\models;
 use app\models\Employee;
 use app\modules\quiz\src\behavior\QuizEmployeeHandler;
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "quiz_employee".
@@ -100,6 +101,23 @@ class QuizEmployee extends \yii\db\ActiveRecord
     public function getQuizEmployeeAnswers()
     {
         return $this->hasMany(QuizEmployeeAnswer::className(), ['quiz_employee_id' => 'quiz_employee_id']);
+    }
+
+    public function sendAnswersToEmployee()
+    {
+        $subjects = [];
+        foreach ($this->quiz->quizSubjectMaps as $map) {
+            $subjects[] = $map->quizSubject->name;
+        }
+        $text = '<p>Доброго дня!</p> <p>Висилаємо Вам посилання на відповіді по опитуванню на теми (<b>' . implode(',', $subjects) . '</b>).</p>';
+        $text .= '<p>Натисніть на <a href="' . Url::to(['/survey/explanation', 'token' => $this->token], true) . '">посилання</a>, щоб перейти на сторінку відповідей</p>';
+        Yii::$app->mailer->compose()
+            ->setFrom('yuvsender@gmail.com')
+            ->setTo($this->owner->employee->email)
+            ->setSubject('Відповіді на опитування')
+            ->setTextBody(strip_tags($text))
+            ->setHtmlBody($text)
+            ->send();
     }
 
     public static function addEmployee($employee_id, $quiz_id)

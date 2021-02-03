@@ -12,8 +12,8 @@ use \Yii;
 class SurveyController extends Controller
 {
     const MAX_QUESTIONS_COUNT = 5;
-    CONST MIN_LEVEL = 1;
-    CONST MAX_LEVEL = 3;
+    const MIN_LEVEL = 1;
+    const MAX_LEVEL = 3;
 
 
     public $layout = 'frontend';
@@ -26,7 +26,7 @@ class SurveyController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'except' => ['index', 'start', 'finish'],
+                'except' => ['index', 'start', 'finish', 'explanation'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -92,7 +92,7 @@ class SurveyController extends Controller
     {
         $quiz_employee = QuizEmployee::findOne(['token' => $token]);
 
-        if (!$quiz_employee || !$quiz_employee->passed || !$quiz_employee->show_explanation) {
+        if (!$quiz_employee || !$quiz_employee->passed || (Yii::$app->user->isGuest && !$quiz_employee->show_explanation)) {
             return $this->render('error', [
                 'error' => 'Опитування не знайдено!',
             ]);
@@ -115,7 +115,7 @@ class SurveyController extends Controller
             $quiz_employee->save();
         }
 
-        return $this->redirect( [ 'survey/index', 'token' => $token ] );
+        return $this->redirect(['survey/index', 'token' => $token]);
     }
 
     public function actionFinish($token = '')
@@ -149,7 +149,7 @@ class SurveyController extends Controller
             $quiz_employee->save();
         }
 
-        return $this->redirect( [ 'survey/index', 'token' => $token ] );
+        return $this->redirect(['survey/index', 'token' => $token]);
     }
 
     private function getCurrentQuizQuestions($quiz_employee)
@@ -196,12 +196,12 @@ class SurveyController extends Controller
         $num_hash_parts = unpack('N2', $bin_hash);
         $num_hash = $num_hash_parts[1] . $num_hash_parts[2];
 
-        return (string) $num_hash;
+        return (string)$num_hash;
     }
 
     private function getQuizQuestions($quiz_employee, $level)
     {
-        $hash_key = 'quiz_employee_'.$quiz_employee->quiz_employee_id.'_'.$level;
+        $hash_key = 'quiz_employee_' . $quiz_employee->quiz_employee_id . '_' . $level;
         $hash = $this->getNumberHash($hash_key);
         $hash_numbers = array_unique(str_split($hash));
 
@@ -222,7 +222,7 @@ class SurveyController extends Controller
 
                 $answers = [];
                 foreach ($question->quizAnswers as $answer) {
-                    $answer = (object) ArrayHelper::toArray($answer);
+                    $answer = (object)ArrayHelper::toArray($answer);
                     $answer->selected = in_array($answer->quiz_answer_id, $employee_selected_answers_ids);
 
                     if ($answer->selected && !$answer->correct) {
@@ -236,14 +236,14 @@ class SurveyController extends Controller
                 }
                 shuffle($answers);
 
-                $question = (object) ArrayHelper::toArray($question);
+                $question = (object)ArrayHelper::toArray($question);
                 $question->answers = $answers;
                 $question->subject = $subject;
                 $question->correct = $is_question_correct;
 
                 if (!empty($hash_numbers)) {
                     $index = intval(array_shift($hash_numbers));
-                    $questions[ $index ] = $question;
+                    $questions[$index] = $question;
                 } else {
                     $questions[] = $question;
                 }

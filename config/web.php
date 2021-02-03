@@ -65,7 +65,19 @@ $config = [
             'enablePrettyUrl' => true,
             'rules' => $rules,
         ],
-
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@app/mail',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'yuvsender@gmail.com',
+                'password' => '3b5cY:,R%%E!!@YE',
+                'port' => 465,
+                'encryption' => 'ssl',
+            ],
+            'useFileTransport' => false,
+        ],
     ],
     'modules' => [
         'quiz' => [
