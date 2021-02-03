@@ -41,6 +41,20 @@ class QuizQuestionHandler extends Behavior
                 $this->owner->image = $filename;
             }
         }
+
+        if (isset($this->owner->answers) && $this->owner->answers) {
+            $multiple = 0;
+            foreach ($this->owner->answers as $quiz_answer) {
+                if ($quiz_answer['correct']) {
+                    $multiple += 1;
+                }
+                if ($multiple > 1) {
+                    $this->owner->type = QuizQuestion::TYPE_MULTIPLE;
+                } else {
+                    $this->owner->type = QuizQuestion::TYPE_SIMPLE;
+                }
+            }
+        }
     }
 
     public function after()
@@ -48,20 +62,12 @@ class QuizQuestionHandler extends Behavior
         QuizAnswer::deleteAll(['quiz_question_id' => $this->owner->quiz_question_id]);
 
         if (isset($this->owner->answers) && $this->owner->answers) {
-            $multiple = 0;
             foreach ($this->owner->answers as $quiz_answer) {
                 $answer = new QuizAnswer();
                 $answer->quiz_question_id = $this->owner->quiz_question_id;
                 $answer->content = $quiz_answer['content'];
                 $answer->correct = $quiz_answer['correct'];
                 $answer->save();
-                if ($quiz_answer['correct']) {
-                    $multiple += 1;
-                }
-            }
-            if ($multiple > 1) {
-                $this->owner->type = QuizQuestion::TYPE_MULTIPLE;
-                $this->owner->save();
             }
         }
     }
