@@ -2,6 +2,8 @@
 
 namespace app\modules\quiz\controllers;
 
+use app\models\Department;
+use app\modules\quiz\src\helpers\AnalyticsHelper;
 use Yii;
 use app\modules\quiz\models\Quiz;
 use app\modules\quiz\models\search\Quiz as QuizSearch;
@@ -94,6 +96,24 @@ class QuizController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+        ]);
+    }
+
+    public function actionAnalyticsByDepartment($quiz_id)
+    {
+        $quiz = $this->findModel($quiz_id);
+        return $this->render('analytics-by-department', [
+            'quiz' => $quiz,
+            'data' => AnalyticsHelper::getAnalyticsDataByDepartments($quiz->quiz_id)
+        ]);
+    }
+
+    public function actionAnalyticsBySubject($department_id = null)
+    {
+        $department = Department::findOne($department_id);
+        return $this->render('analytics-by-subject', [
+            'department' => $department,
+            'data' => AnalyticsHelper::getAnalyticsDataBySubjects($department_id)
         ]);
     }
 

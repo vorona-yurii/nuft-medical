@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'layout' => '{items}',
                         'columns' =>
                             [
+                                'quiz_id',
                                 'name',
                                 'description:ntext',
                                 [
@@ -49,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 [
                                     'class' => 'yii\grid\ActionColumn',
-                                    'template' => '{update} {delete} {employees}',
+                                    'template' => '{update} {delete} {analytics} {employees}',
                                     'headerOptions' => ['width' => '200'],
                                     'buttons' => [
                                         'update' => function ($url, $model, $key) {
@@ -75,6 +76,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'class' => 'btn btn-primary',
                                                     'title' => 'Працівники',
                                                     'data-pjax' => '0',
+                                                ]);
+                                        },
+                                        'analytics' => function ($url, $model, $key) {
+                                            return Html::a('Аналітика', ['/quiz/quiz/analytics-by-department', 'quiz_id' => $key],
+                                                [
+                                                    'class' => 'btn btn-warning',
+                                                    'title' => 'Аналітика по проходженню опитування по підрозділам',
                                                 ]);
                                         }
                                     ],

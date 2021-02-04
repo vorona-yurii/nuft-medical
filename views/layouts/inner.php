@@ -42,7 +42,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
             $class_organization = in_array($this->context->route, ['employee/list', 'department/list', 'profession/list', 'position/list']) ? 'active' : '';
             $class_other = in_array($this->context->route, ['factor/list', 'doctor/list', 'analysis/list', 'periodicity/list']) ? 'active' : '';
             $class_report = in_array($this->context->route, ['report/employee', 'report/list']) ? 'active' : '';
-            $class_quiz = in_array($this->context->route, ['quiz/quiz/index', 'quiz/quiz/create', 'quiz/quiz/update', 'quiz/quiz-question/index', 'quiz/quiz-question/create', 'quiz/quiz-question/update', 'quiz/quiz-subject/index', 'quiz/quiz-subject/create', 'quiz/quiz-subject/update']) ? 'active' : '';
+            $class_quiz = in_array($this->context->route, ['quiz/quiz/index', 'quiz/quiz/analytics-by-department', 'quiz/quiz/analytics-by-subject', 'quiz/quiz/create', 'quiz/quiz/update', 'quiz/quiz-question/index', 'quiz/quiz-question/create', 'quiz/quiz-question/update', 'quiz/quiz-subject/index', 'quiz/quiz-subject/create', 'quiz/quiz-subject/update']) ? 'active' : '';
             echo Nav::widget([
                 'encodeLabels' => false,
                 'items' => [
@@ -112,6 +112,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favi
                             ['label' => 'Теми', 'url' => ["/quiz/quiz-subject"]],
                             ['label' => 'Питання', 'url' => ["/quiz/quiz-question"]],
                             ['label' => 'Опитування', 'url' => ["/quiz/quiz"]],
+                            ['label' => 'Аналітика по підрозділам', 'url' => ["/quiz/quiz/analytics-by-subject"]],
                         ],
                         'options' => ['class' => 'nav nav-second-level collapse'],
                     ])

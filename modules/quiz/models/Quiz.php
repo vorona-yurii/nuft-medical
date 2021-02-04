@@ -60,7 +60,7 @@ class Quiz extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'quiz_id' => 'ID опитування',
+            'quiz_id' => '№ опитування',
             'name' => 'Назва',
             'description' => 'Опис',
             'duration' => 'Тривалість (хв)',
